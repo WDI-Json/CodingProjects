@@ -1,41 +1,44 @@
 @import url('https://fonts.googleapis.com/css?family=Ubuntu');
-.header {
-    grid-area: header;
-    background-color: #fff;
+body {
+    background-color: #D6EAF8;
 }
 
-.body {
-    grid-area: main;
-    background-color: #fff;
+#bannerimage {
+    width: 100%;
+    height: 350px;
+    background-color: purple;
+    background-position: center;
+    background-image: url(https://netskymusic.com/img/netsky_logo.svg);
 }
 
-.content-box .content {
-    overflow: hidden;
-    padding: 10px;
-    font-size: 15px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border: 1px solid gray;
-    color: #3385FF;
+#bg-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
 }
 
-.content-box .title {
-    height: 30px;
-    line-height: 30px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    background: gray;
+.content {
+    position: fixed;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 100%;
+    padding: 20px;
+}
+
+#btn_pause_bg {
+    width: 200px;
     font-size: 18px;
-    font-weight: bold;
-    font-family: verdana;
-    display: block;
-    color: white;
-    display: block;
     padding: 10px;
-    border: 1px solid gray;
-    border-bottom: none;
+    border: none;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
 }
 
-.body {
-    display: flex;
+#btn_pause_bg:hover {
+    background: #ddd;
+    color: black;
 }

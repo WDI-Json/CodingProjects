@@ -1,25 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" contents="width=device-width,
-        initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Tribute page to Netsky</title>
-</head>
-
-<!-- SVG image https://netskymusic.com/img/netsky_logo.svg -->
+<h1 class="title"> Boris Daenen</h1>
+<p> also known as: Netsky </p>
+<!-- The video -->
+<video autoplay muted loop id="bg-video">
+  <source src="NetskyPromo.mp4" type="video/mp4">
+</video>
 
 <body>
-    <div class="content-box">
-        <div class="title">Netsky introductie</div>
-        <div class="content">
+    <div id="bannerimage"></div>
+
+    <article class="content">
+        <p>
             Netsky (IPA: /ˈnɛtskaɪ/), de artiestennaam van Boris Daenen[1] (Edegem, 22 maart 1989), is een Belgische dj en producent van drum and bass. Zijn artiestennaam is vernoemd naar een computervirus dat in de periode wanneer hij muziek begon te maken vrij
             actief was. Het idee daarachter was dat de kans bestond dat men het virus zou downloaden, wanneer men op internet op zoek zou gaan om zijn muziek illegaal te downloaden. De naam van het virus op zich is dan weer een anagram van het computernetwerk
-            Skynet uit de Terminator-filmreeks.</div>
-    </div>
-
+            Skynet uit de Terminator-filmreeks.</p>
+    </article>
+    <button id="btn_pause_bg" onclick="pause_background()">Pause</button>
 
 </body>
 
