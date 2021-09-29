@@ -1,50 +1,37 @@
-    @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap");
-    html {
-        font-size: 15px;
-        font-family: sans-serif;
-    }
-    
-    .bg {
-        background: url(https://i.imgur.com/qfCLlUH.png);
-        background-repeat: no-repeat;
-        background-size: 100%;
-    }
-    
-    #main {
-        font-size: 15px;
-        font-family: sans-serif;
-    }
-    
-    .tribute-info {
-        background-color: #fff;
-        padding: 30px;
-    }
-    
-    .body {
-        padding-left: 30px;
-        padding-right: 30px;
-        font-style: whitesmoke !important;
-        font-size: 35px;
-    }
-    
-    #img-div {
-        justify-content: center;
-        display: flex;
-    }
-    
-    .title {
-        height: 300px;
-        display: flex;
-        flex-direction: column;
-        font-size: 45px;
-    }
-    
-    .title .subtitle {
-        background-color: whitesmoke;
-    }
-    
-    img {
-        border-radius: 50%;
-        width: 250px;
-        height: 250px;
-    }
+        @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap");
+    @media(min-width:468px) {
+        .containerheader {
+            display: flex;
+            flex-direction: column;
+        }
+        .containerheader div {
+            padding: 10px;
+            margin-bottom: 30px;
+            border-bottom: 3px #ccc solid;
+        }
+        /* containerheaderbox 1 */
+        .headbanner {
+            flex: 1;
+            order: 1;
+            align-items: center;
+            flex-basis: 100%;
+        }
+        .containerbody {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-self: center;
+        }
+        .image {
+            border-radius: 50%;
+            align-items: center;
+        }
+        /* .title {
+flex: 2;
+order: 2;
+background: url(https://i.imgur.com/qfCLlUH.png);
+background-repeat: no-repeat;
+background-size: 100%;
+} */
+        /* containerheaderbox 2 */
+        /* containerheaderbox 3 */

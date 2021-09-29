@@ -1,11 +1,11 @@
 <!-- 
-[X] User Story #1: My tribute page should have an element with a corresponding id="main", which contains all other elements.
-[X] User Story #2: I should see an element with a corresponding id="title", which contains a string (i.e. text) that describes the subject of the tribute page (e.g. "Dr. Norman Borlaug").
-[X] User Story #3: I should see a div element with a corresponding id="img-div".
-[X] User Story #4: Within the img-div element, I should see an img element with a corresponding id="image".
-[X] User Story #5: Within the img-div element, I should see an element with a corresponding id="img-caption" that contains textual content describing the image shown in img-div.
-[X] User Story #6: I should see an element with a corresponding id="tribute-info", which contains textual content describing the subject of the tribute page.
-[X] User Story #7: I should see an a element with a corresponding id="tribute-link", which links to an outside site that contains additional information about the subject of the tribute page. 
+[] User Story #1: My tribute page should have an element with a corresponding id="main", which contains all other elements.
+[] User Story #2: I should see an element with a corresponding id="title", which contains a string (i.e. text) that describes the subject of the tribute page (e.g. "Dr. Norman Borlaug").
+[] User Story #3: I should see a div element with a corresponding id="img-div".
+[] User Story #4: Within the img-div element, I should see an img element with a corresponding id="image".
+[] User Story #5: Within the img-div element, I should see an element with a corresponding id="img-caption" that contains textual content describing the image shown in img-div.
+[] User Story #6: I should see an element with a corresponding id="tribute-info", which contains textual content describing the subject of the tribute page.
+[] User Story #7: I should see an a element with a corresponding id="tribute-link", which links to an outside site that contains additional information about the subject of the tribute page. 
     HINT: You must give your element an attribute of target and set it to _blank in order for your link to open in a new tab (i.e. target="_blank").
 [] User Story #8: The img element should responsively resize, relative to the width of its parent element, without exceeding its original size.
 [] User Story #9: The img element should be centered within its parent element.
@@ -13,46 +13,54 @@
 <html>
 <link rel="stylesheet" href="style.css">
 <main id='main'>
-    <header>
-        <h1 class="title"><img src="https://netskymusic.com/img/netsky_logo.svg" alt="Netsky logo"></h1>
-        <p class="subtitle"> also known as: Boris Daenen </p>
+    <header class="containerheader">
+        <div class=headbanner><img src="https://netskymusic.com/img/netsky_logo.svg" alt="Netsky logo">
+        </div>
     </header>
-    <!-- Banner image -->
-    <figure id="img-div">
-        <img id="image" src="https://content-eu-8.content-cms.com/12becebc-ce88-4f3c-844b-fed0588ae8fb/dxdam/8d/8d439f0f-39f4-42af-88c9-a644fdac6025/20220430-LA-netsky2-400x400.jpg" alt="Best song ever">
-        <figcaption id="img-caption">
-            Netsky promotional picture for his New Zealand tour.
-        </figcaption>
-    </figure>
+    <div class="containerbody">
+        <figure class="img-div">
+            <img class="image" src="https://content-eu-8.content-cms.com/12becebc-ce88-4f3c-844b-fed0588ae8fb/dxdam/8d/8d439f0f-39f4-42af-88c9-a644fdac6025/20220430-LA-netsky2-400x400.jpg" alt="Best song ever">
+            <figcaption class="img-caption">
+                Netsky promotional picture for his New Zealand tour.
+            </figcaption>
+        </figure>
+        <h3 class="title">My favorite artist Netsky</h1>
+            <p> also known as: Boris Daenen </p>
 
-    <div class="card-header card-bg" id="header">
-        &nbsp;
-        <section id="tribute-info">
-            <h3 class="content card-bg card-text">Some information about Netsky:</h3>
-            <p class="card-subcontent">Netsky (pronounced as: ˈnet-skai'), the artist name of Boris Daenen, born in Edegem on the 22nd of march 1989 in Belgium. Known as a DJ and producer of Drum & Bass music.</p>
-            <p class="card-subcontent">His artistname is named after a computervirus roaming around in the period he started making music. The idea behind it was people downloading the virus when looking for illegal music. </p>
-            <p class="card-subcontent"> The name on itself is an anagram of the computernetwork Skynet from the Terminator-saga. </p>
-        </section>
+
+
+
+
+            <div class="bodybox">
+                <section id="tribute-info">
+                    <h3 class="content card-bg card-text">Some information about Netsky:</h3>
+                    <p class="card-subcontent">Netsky (pronounced as: ˈnet-skai'), the artist name of Boris Daenen, born in Edegem on the 22nd of march 1989 in Belgium. Known as a DJ and producer of Drum & Bass music.</p>
+                    <p class="card-subcontent">His artistname is named after a computervirus roaming around in the period he started making music. The idea behind it was people downloading the virus when looking for illegal music. </p>
+                    <p class="card-subcontent"> The name on itself is an anagram of the computernetwork Skynet from the Terminator-saga. </p>
+                </section>
+            </div>
     </div>
 
-    <div class="card-header card-bg" id="header">
-        <h3 class="content">
-            If you've become curious about Netsky's work you can find more on him at the folowing websites:
-            <li> <a id="tribute-link" href="https://en.wikipedia.org/wiki/Netsky_(electronic_musician)" target="_blank">Wikipedia source info</a>
-            </li>
-            <li> <a id="tribute-link" href="https://netskymusic.com/" target="_blank">Official website</a>
-            </li>
-            <li> <a id="tribute-link" href="https://youtu.be/IKlgBWom45o" target="_blank">Live-performance New Zealand</a>
-            </li>
+    <!-- <div class="containerfooter">
+        <div class="footerbox">
+            <h3 class="content">
+                If you've become curious about Netsky's work you can find more on him at the folowing websites:
+                <li> <a id="tribute-link" href="https://en.wikipedia.org/wiki/Netsky_(electronic_musician)" target="_blank">Wikipedia source info</a>
+                </li>
+                <li> <a id="tribute-link" href="https://netskymusic.com/" target="_blank">Official website</a>
+                </li>
+                <li> <a id="tribute-link" href="https://youtu.be/IKlgBWom45o" target="_blank">Live-performance New Zealand</a>
+                </li>
+            </h3>
+            <footer>Backgroundimage info:
+                <p>"We Can Only Live Today (Puppy)" is a song by Belgian drum and bass producer Netsky, featuring vocals from Billie. The song was released on November 5, 2012 as a digital download in the United Kingdom. The song was written by Boris Daenen
+                    and Billie Bentein.</p>
+            </footer>
+        </div>
+    </div> 
+ -->
 
-        </h3>
-    </div>
 
-
-    <footer>Backgroundimage info:
-        <p>"We Can Only Live Today (Puppy)" is a song by Belgian drum and bass producer Netsky, featuring vocals from Billie. The song was released on November 5, 2012 as a digital download in the United Kingdom. The song was written by Boris Daenen and
-            Billie Bentein.</p>
-    </footer>
 </main>
 
 </html>
