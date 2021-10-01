@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+.content-box-gray .content {
+    overflow: hidden;
+    padding: 10px;
+    font-size: 15px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid gray;
+    color: #3385FF;
+}
+
+.content-box-gray .title {
+    height: 30px;
+    line-height: 30px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background: gray;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: verdana;
+    display: block;
+    color: white;
+    display: block;
+    padding: 10px;
+    border: 1px solid gray;
+    border-bottom: none;
+}
