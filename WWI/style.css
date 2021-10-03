@@ -1,8 +1,100 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
+:root {
+    /*De huisstijl*/
+    --darkgray: #212329;
+    --brightred: #F9423D;
+    --white: #fff;
+    --lightred: #F9433DCC
+}
 *{
     box-sizing:border-box;
     margin:0;
     padding:0;
     font-family: 'Roboto', sans-serif;
+}
+.nav-container{
+    width: 100%;
+    background-color: var(--darkgray);
+}
+.navbar {
+    display: grid;
+    grid-template-columns: 0.2fr auto 1fr;
+    align-items: center;
+    height:80px;
+    width:90%;
+    max-width: 1720px;
+    margin:0 auto;
+}
+#LogoWWI{
+    color:var(--white);
+    justify-self: start;
+    margin-left: 20px;
+}
+/*zorgt ervoor dat je naar Home gaat als je op logo klikt*/
+#LogoWWI {
+    cursor:pointer;
+}
+.nav-menu{
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    list-style: none;
+    text-align: center;
+    width:70%;
+    justify-self: end;
+}
+
+.nav-links{
+    color:var(--white);
+    text-decoration: none;
+}
+
+.nav-links:hover{
+    color:var(--brightred);
+    transition: all 0.2s ease-out;
+}
+
+.nav-links-btn {
+background-color: var(--brightred);
+    padding:4px 12px;
+    border-radius: 6px;
+}
+
+.nav-links-btn:hover {
+    background-color: transparent;
+    color: var(--white);
+    padding: 5px 15px;
+    border-radius:4px;
+    border:solid 1px var(--brightred);
+    transition: all 0.3s ease-out;
+}
+
+.menu-toggle .bar {
+    width:25px;
+    height:3px;
+    margin:5px auto;
+    transition: all 0.3s ease-out;
+    background: var(--white)
+}
+
+/*media queries voor het toegankelijk maken van kleinere schermen*/
+@media screen and (max-width: 768px) {
+    .nav-container{
+        position: relative;
+    }
+    .nav-menu{
+        display: grid;
+        grid-template-columns: auto;
+        background: var(--brightred);
+        margin:0;
+        width:100%;
+        position: absolute;
+        top:80px;
+        left:-100%;
+        opacity: 0;
+        transition: all 0.5s ease;
+    }
+    #LogoWWI {
+        margin-left: 20px;
+    }
 }
