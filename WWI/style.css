@@ -97,4 +97,63 @@ background-color: var(--brightred);
     #LogoWWI {
         margin-left: 20px;
     }
+    .nav-menu.active {
+        background: var(--darkgray);
+        left:0;
+        opacity: 1;
+        transition: all 0.5s ease;
+
+    }
+    .nav-links {
+        text-align: center;
+        line-height: 60px;
+        width:100%;
+        display: table;
+    }
+    .nav-links:hover {
+        background-color: var(--brightred);
+        color:var(--white);
+        transition: all 0.4s ease-out;
+    }
+    .navbar {
+        width:100%;
+    }
+    .nav-links-btn{
+        border: none;
+        padding: 0;
+        border-radius: 0;
+        background-color: var(--darkgray);
+        color:var(--white);
+        transition: all 0.4s ease-out;
+    }
+    .nav-links-btn:hover{
+        border: none;
+        padding: 0;
+        border-radius: 0;
+        background-color: var(--brightred);
+        color:var(--white);
+        transition: all 0.4s ease-out;
+    }
+    #mobile-menu {
+        position: absolute;
+        top:20%;
+        right:5%;
+        transform: translate(5% 20%);
+    }
+    .menu-toggle .bar {
+        display: block;
+        cursor: pointer;
+    }
+    .menu-toggle:hover {
+        cursor:pointer;
+    }
+    #mobile-menu.is-active .bar:nth-child(2){
+        opacity: 0;
+    }
+    #mobile-menu.is-active .bar:nth-child(1){
+        transform: translateY(8px) rotate(45deg);
+    }
+    #mobile-menu.is-active .bar:nth-child(3){
+        transform: translateY(-8px) rotate(-45deg);
+    }
 }
