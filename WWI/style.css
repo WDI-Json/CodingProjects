@@ -76,7 +76,9 @@ background-color: var(--brightred);
     transition: all 0.3s ease-out;
     background: var(--white)
 }
-
+.short-text {
+    display: none;
+}
 /*media queries voor het toegankelijk maken van kleinere schermen*/
 @media screen and (max-width: 768px) {
     .nav-container{
@@ -155,5 +157,12 @@ background-color: var(--brightred);
     }
     #mobile-menu.is-active .bar:nth-child(3){
         transform: translateY(-8px) rotate(-45deg);
+    }
+    .short-text {
+        display: inline-block;
+        transition: all 0.5s ease;
+    }
+    .full-text {
+        display: none;
     }
 }
