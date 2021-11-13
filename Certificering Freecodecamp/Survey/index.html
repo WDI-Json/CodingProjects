@@ -1,4 +1,29 @@
 <!DOCTYPE html>
+<!-- 
+[x] User Story #1: I can see a title with id="title" in H1 sized text.
+[x] User Story #2: I can see a short explanation with id="description" in P sized text.
+[x] User Story #3: I can see a form with id="survey-form".
+[] User Story #4: Inside the form element, I am required to enter my name in a field with id="name".
+[] User Story #5: Inside the form element, I am required to enter an email in a field with id="email".
+[] User Story #6: If I enter an email that is not formatted correctly, I will see an HTML5 validation error.
+
+[] User Story #7: Inside the form, I can enter a number in a field with id="number".
+[] User Story #8: If I enter non-numbers in the number input, I will see an HTML5 validation error.
+[] User Story #9: If I enter numbers outside the range of the number input, 
+    which are defined by the min and max attributes, I will see an HTML5 validation error.
+
+[] User Story #10: For the name, email, and number input fields inside the form 
+    I can see corresponding labels that describe the purpose of each field with the following ids: id="name-label", id="email-label", and id="number-label".
+[] User Story #11: For the name, email, and number input fields, I can see placeholder text that gives me a description or instructions for each field.
+[] User Story #12: Inside the form element, I can select an option from a dropdown that has a corresponding id="dropdown".
+[] User Story #13: Inside the form element, I can select a field from one or more groups of radio buttons. Each group should be grouped using the name attribute.
+[] User Story #14: Inside the form element, I can select several fields from a series of checkboxes, each of which must have a value attribute.
+[] User Story #15: Inside the form element, I am presented with a textarea at the end for additional comments.
+[] User Story #16: Inside the form element, I am presented with a button with id="submit" to submit all my inputs.
+
+
+
+ -->
 <html lang="en">
 
 <head>
@@ -6,13 +31,42 @@
     <meta name="viewport" contents="width=device-width,
         initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>Wazig laden</title>
+    <title>SurveyPage</title>
 </head>
 
 <body>
-    <section class="bg"></section>
-    <div class="loading-text">0%</div>
-    <script src="script.js"></script>
+    <div class="container">
+        <header class="header">
+            <h1 id="title" class="text-center">Student Survey form</h1>
+            <p id="description" class="description text-center">
+                Help us doing research on students in the Netherlands!
+            </p>
+        </header>
+        <form id="survey-form">
+            <!-- basic info -->
+            <label for="fname">First name:</label><br>
+            <input type="text" id="fname" name="fname" placeholder="John"><br>
+            <label for="lname">Last name:</label><br>
+            <input type="text" id="lname" name="lname" placeholder="Doe"><br>
+            <label for="fname">Email:</label><br>
+            <input type="text" id="fname" name="fname" placeholder="JohnDoe@email.com"><br>
+            <!-- dropdown -->
+            <label for="cars">Choose your faculty</label>
+            <select name="cars" id="cars">
+              <option value="volvo">Computer Science</option>
+              <option value="saab">Mathematics</option>
+              <option value="mercedes">Biology</option>
+              <option value="audi">Physics</option>
+            </select><br>
+            <!-- number questions-->
+            <label for="fname">How old are you?</label><br>
+            <input type="text" id="fname" name="fname" placeholder="Age"><br>
+            <label for="fname">How many days of class during the week would you like?</label><br>
+            <input type="text" id="fname" name="fname" placeholder="JohnDoe@email.com"><br>
+            <!-- submission-->
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 </body>
 
 </html>
