@@ -6,11 +6,10 @@
 class database
 {
     //parameters
-    private $servername = 'localhost';
-    private $db_name = 'wideworldimporters';
+    private $servername = 'localhost:3306';
+    private $db_name = 'sakila';
     private $username = 'root';
     private $password = '';
-    private $charset = 'utf8mb8';
     private $connection;
 
     //verbinding met DB
@@ -26,7 +25,6 @@ class database
             $this->connection = new PDO(
             "mysql:host=" . $this->servername .
             ";dbname=" . $this->db_name,
-            ";charset=" . $this->charset,
             $this->username,
             $this->password
             );
