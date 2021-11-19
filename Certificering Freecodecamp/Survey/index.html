@@ -3,9 +3,9 @@
 [x] User Story #1: I can see a title with id="title" in H1 sized text.
 [x] User Story #2: I can see a short explanation with id="description" in P sized text.
 [x] User Story #3: I can see a form with id="survey-form".
-[] User Story #4: Inside the form element, I am required to enter my name in a field with id="name".
-[] User Story #5: Inside the form element, I am required to enter an email in a field with id="email".
-[] User Story #6: If I enter an email that is not formatted correctly, I will see an HTML5 validation error.
+[x] User Story #4: Inside the form element, I am required to enter my name in a field with id="name".
+[x] User Story #5: Inside the form element, I am required to enter an email in a field with id="email".
+[x] User Story #6: If I enter an email that is not formatted correctly, I will see an HTML5 validation error.
 
 [] User Story #7: Inside the form, I can enter a number in a field with id="number".
 [] User Story #8: If I enter non-numbers in the number input, I will see an HTML5 validation error.
@@ -45,11 +45,11 @@
         <form id="survey-form">
             <!-- basic info -->
             <label for="fname">First name:</label><br>
-            <input type="text" id="fname" name="fname" placeholder="John"><br>
+            <input type="text" id="name" name=firstname placeholder="John" required><br>
             <label for="lname">Last name:</label><br>
-            <input type="text" id="lname" name="lname" placeholder="Doe"><br>
+            <input type="text" id="name" name=lastname placeholder="Doe" required><br>
             <label for="fname">Email:</label><br>
-            <input type="text" id="fname" name="fname" placeholder="JohnDoe@email.com"><br>
+            <input type="email" id="email" name=email placeholder="JohnDoe@email.com" required><br>
             <!-- dropdown -->
             <label for="cars">Choose your faculty</label>
             <select name="cars" id="cars">
@@ -59,10 +59,10 @@
               <option value="audi">Physics</option>
             </select><br>
             <!-- number questions-->
-            <label for="fname">How old are you?</label><br>
-            <input type="text" id="fname" name="fname" placeholder="Age"><br>
-            <label for="fname">How many days of class during the week would you like?</label><br>
-            <input type="text" id="fname" name="fname" placeholder="JohnDoe@email.com"><br>
+            <label for="age">How old are you?</label><br>
+            <input type="number" id="number" name="age" min="12" max="99" placeholder="fill in your age"><br>
+            <label for="daysclass">How many days of class during the week would you like?</label><br>
+            <input type="number" id="daysclass" name="daysclass" placeholder="number of days."><br>
             <!-- submission-->
             <input type="submit" value="Submit">
         </form>
