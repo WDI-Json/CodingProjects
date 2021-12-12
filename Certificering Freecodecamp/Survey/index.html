@@ -18,8 +18,8 @@
 [x] User Story #12: Inside the form element, I can select an option from a dropdown that has a corresponding id="dropdown".
 [x] User Story #13: Inside the form element, I can select a field from one or more groups of radio buttons. Each group should be grouped using the name attribute.
 [X] User Story #14: Inside the form element, I can select several fields from a series of checkboxes, each of which must have a value attribute.
-[] User Story #15: Inside the form element, I am presented with a textarea at the end for additional comments.
-[] User Story #16: Inside the form element, I am presented with a button with id="submit" to submit all my inputs.
+[X] User Story #15: Inside the form element, I am presented with a textarea at the end for additional comments.
+[x] User Story #16: Inside the form element, I am presented with a button with id="submit" to submit all my inputs.
 
 
 
@@ -75,18 +75,21 @@
                 <label>1 semester
               <input type="radio" name="participation" />
             </label>
-            </div>
-            <!-- Checkbox-->
-            <br>
-            <label>I knowingly accept the terms in which my data will be used for this research</label>
-            <input type="checkbox" /><br>
-            <label>I would like to sign up for weekly updates</label>
-            <input type="checkbox" /><br>
-
-            <!-- submission-->
-            <input type="submit" value="Submit">
+            </div><br>
+            <!-- Comment section-->
+            <div class="comment-container">
+                <textarea placeholder="Any remarks or questions can be jotted down here!"></textarea>
+                </comment>
+                <!-- Checkbox-->
+                <br>
+                <label>I knowingly accept the terms in which my data will be used for this research</label>
+                <input type="checkbox" checked/><br>
+                <label>I would like to sign up for weekly updates</label>
+                <input type="checkbox" checked/><br>
+                <!-- submission-->
+                <input type="submit" value="Submit">
         </form>
-    </div>
+        </div>
 </body>
 
 </html>
