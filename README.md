@@ -1,2 +1,2 @@
 # Knutselprojecten
-Algemene map met knutselprojecten geïnspireerd door school.
+Algemene map met knutselprojecten
