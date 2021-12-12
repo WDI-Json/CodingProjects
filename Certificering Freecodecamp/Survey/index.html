@@ -12,12 +12,12 @@
 [x] User Story #9: If I enter numbers outside the range of the number input, 
     which are defined by the min and max attributes, I will see an HTML5 validation error.
 
-[] User Story #10: For the name, email, and number input fields inside the form 
+[x] User Story #10: For the name, email, and number input fields inside the form 
     I can see corresponding labels that describe the purpose of each field with the following ids: id="name-label", id="email-label", and id="number-label".
-[] User Story #11: For the name, email, and number input fields, I can see placeholder text that gives me a description or instructions for each field.
-[] User Story #12: Inside the form element, I can select an option from a dropdown that has a corresponding id="dropdown".
-[] User Story #13: Inside the form element, I can select a field from one or more groups of radio buttons. Each group should be grouped using the name attribute.
-[] User Story #14: Inside the form element, I can select several fields from a series of checkboxes, each of which must have a value attribute.
+[x] User Story #11: For the name, email, and number input fields, I can see placeholder text that gives me a description or instructions for each field.
+[x] User Story #12: Inside the form element, I can select an option from a dropdown that has a corresponding id="dropdown".
+[x] User Story #13: Inside the form element, I can select a field from one or more groups of radio buttons. Each group should be grouped using the name attribute.
+[X] User Story #14: Inside the form element, I can select several fields from a series of checkboxes, each of which must have a value attribute.
 [] User Story #15: Inside the form element, I am presented with a textarea at the end for additional comments.
 [] User Story #16: Inside the form element, I am presented with a button with id="submit" to submit all my inputs.
 
@@ -45,24 +45,44 @@
         <form id="survey-form">
             <!-- basic info -->
             <label for="fname">First name:</label><br>
-            <input type="text" id="name" name=firstname placeholder="John" required><br>
+            <input class=text-bar type="text" id="name" name=firstname placeholder="John" required><br>
             <label for="lname">Last name:</label><br>
-            <input type="text" id="name" name=lastname placeholder="Doe" required><br>
+            <input class=text-bar type="text" id="name" name=lastname placeholder="Doe" required><br>
             <label for="fname">Email:</label><br>
-            <input type="email" id="email" name=email placeholder="JohnDoe@email.com" required><br>
+            <input class=text-bar type="email" id="email" name=email placeholder="JohnDoe@email.com" required><br>
             <!-- dropdown -->
-            <label for="cars">Choose your faculty</label>
-            <select name="cars" id="cars">
-              <option value="volvo">Computer Science</option>
-              <option value="saab">Mathematics</option>
-              <option value="mercedes">Biology</option>
-              <option value="audi">Physics</option>
+            <label for="faculty">Choose your faculty</label>
+            <select class=text-bar name="faculty" id="dropdown">
+              <option value="CS">Computer Science</option>
+              <option value="Mat">Mathematics</option>
+              <option value="Bio">Biology</option>
+              <option value="Ph">Physics</option>
             </select><br>
             <!-- number questions-->
             <label for="age">How old are you?</label><br>
-            <input type="number" id="number" name="age" min="12" max="99" placeholder="fill in your age"><br>
+            <input class=text-bar type="number" id="number" name="age" min="12" max="99" placeholder="fill in your age"><br>
             <label for="daysclass">How many days of class during the week would you like?</label><br>
-            <input type="number" id="daysclass" name="daysclass" placeholder="number of days."><br>
+            <input class=text-bar type="number" id="daysclass" name="daysclass" min="1" max="5" placeholder="number of days."><br>
+            <!-- Radio buttons-->
+            <p>For how long would you like to participate in this research?</p><br>
+            <div class=radio_buttons>
+                <label>While being a student
+              <input type="radio" name="participation" checked/>
+            </label>
+                <label>2 semesters (1 year)
+              <input type="radio" name="participation" />
+            </label>
+                <label>1 semester
+              <input type="radio" name="participation" />
+            </label>
+            </div>
+            <!-- Checkbox-->
+            <br>
+            <label>I knowingly accept the terms in which my data will be used for this research</label>
+            <input type="checkbox" /><br>
+            <label>I would like to sign up for weekly updates</label>
+            <input type="checkbox" /><br>
+
             <!-- submission-->
             <input type="submit" value="Submit">
         </form>
