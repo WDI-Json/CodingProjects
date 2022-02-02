@@ -1,8 +1,0 @@
-<%= form_with(model: [@movie, @review], local: true) do |f| %>
-  <%= render "shared/errors", object: review %>
-  
-  <%= f.label :name %>
-  <%= f.text_field :name, autofocus: true %>
-
-  <%= f.submit "Post Review" %>
-<% end %>
