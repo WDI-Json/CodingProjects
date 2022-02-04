@@ -10,17 +10,37 @@ class ReviewsController < ApplicationController
     end
 
     def create
-        @review = @movie.reviews.new(review_params)
-        if @review.save
-            redirect_to movie_reviews_path(@movie),
-                          notice: "Thanks for your review!"
-          else
-            render :new
-          end
-        end
+      @review = @movie.reviews.new(review_params)
+      if @review.save
+          redirect_to movie_reviews_path(@movie),
+                        notice: "Thanks for your review!"
+      else
+        render :new
+      end
+    end
+
+    def edit
+      @review = Review.find(params[:id])
+    end
+
+    def update
+      @review = Review.find(params[:id])
+      flash[:notice] = "Review successfully updated!"
+      if @review .update(review_params)
+        redirect_to movie_reviews_path(@movie)
+      else
+        render :edit
+      end
+    end
+
+    def destroy
+      @review = Review.find(params[:id])
+      flash[:alert] = "Movie successfully deleted!"
+      @movie.destroy
+      redirect_to movie_reviews_path(@movie)
+    end
 
     private
-
     def review_params
       params.require(:review).permit(:name, :comment, :stars)
     end
