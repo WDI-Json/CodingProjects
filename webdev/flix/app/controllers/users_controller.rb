@@ -21,6 +21,25 @@ class UsersController < ApplicationController
         end
       end
 
+    def update
+        @user = User.find(params[:id])
+        flash[:notice] = "Account successfully updated!"
+        if @user.update(user_params)
+            redirect_to @user
+        else
+            render :edit
+        end
+    end
+
+    def edit
+        @user = User.find(params[:id])
+    end
+
+    def destroy
+        @user = User.find(params[:id])
+        @user.destroy
+        redirect_to movie_path, alert: "Account succesfully deleted"
+    end
     private
 
     def user_params
