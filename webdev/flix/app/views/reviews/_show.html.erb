@@ -1,5 +1,5 @@
 <ul class="reviews">
-  <% @reviews.each do |review| %>
+  <% @movie.reviews.each do |review| %>
     <li>
     <%= render "shared/stars", percent: review.stars_as_percent %>
       <p>

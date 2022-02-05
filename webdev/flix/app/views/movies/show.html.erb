@@ -36,4 +36,7 @@
   <%= link_to "Delete", movie_path(@movie), class: "button",
   method: :delete, data: { confirm: 'Are you sure?' } %>
 </section>
-
+<section class="admin">
+<h1>Reviews about this movie:</h1>
+<%= render "reviews/show", reviews: @movie.reviews %>
+</section>
