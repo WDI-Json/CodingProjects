@@ -7,6 +7,9 @@
       <h2>
         <%= link_to movie.title, movie %>
       </h2>
+      <span class="stars">
+        <%= render "shared/stars", percent: movie.average_stars_as_percent %>
+      </span>
         <div class="reviews">
         <%= link_to pluralize(movie.reviews.size, "review"),
             movie_reviews_path(movie) %>
