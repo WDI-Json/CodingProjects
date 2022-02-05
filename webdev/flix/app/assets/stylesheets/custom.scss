@@ -288,6 +288,7 @@ ul.reviews {
     font-size: 1.25em;
     list-style: none;
     padding: 0;
+    text-align: center;
     li {
         margin: 1em 0 2.5rem 0;
         span {
@@ -473,7 +474,7 @@ section.errors {
     align-items: center;
     font-size: 25px;
     height: 25px;
-    justify-content: left;
+    justify-content: center;
     .back-stars {
         display: flex;
         color: $light-gray;
