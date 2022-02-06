@@ -15,6 +15,7 @@ class UsersController < ApplicationController
     def create
         @user = User.new(user_params)
         if @user.save
+            session[:user_id] = @user.id
             redirect_to @user, notice: "Thanks signing up!"
         else
           render :new
@@ -37,6 +38,7 @@ class UsersController < ApplicationController
 
     def destroy
         @user = User.find(params[:id])
+        session[:user_id] = nil
         @user.destroy
         redirect_to root_path, alert: "Account succesfully deleted"
     end
