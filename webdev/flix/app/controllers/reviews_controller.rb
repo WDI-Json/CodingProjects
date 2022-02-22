@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :require_signin  
   before_action :set_movie
-    
+
     def index
         @reviews = @movie.reviews
     end
