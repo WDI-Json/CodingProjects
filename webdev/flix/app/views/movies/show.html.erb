@@ -1,6 +1,18 @@
 <section class="movie-details">
 <div class="image">
     <%= image_tag @movie.image_file_name %>
+<% if current_user %>
+  <div class="faves">
+    <% if @favorite %>
+      <%= button_to "♡ Unfavorite", movie_favorite_path(@movie, @favorite), method: :delete  %>
+    <% else %>
+      <%= button_to "♥️ Favorite", movie_favorites_path(@movie) %>
+    <% end %>
+    <div class="count">
+      <%= @fans.size %>
+    </div>
+  </div>
+<% end %>
   </div>
   <div class="details">
     <h1><%= @movie.title %></h1>
