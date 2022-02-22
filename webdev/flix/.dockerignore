@@ -1,0 +1,8 @@
+.bundle
+.vagrant
+.git
+.idea
+tmp/*
+log/*
+.sass-cache
+node_modules
