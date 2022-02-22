@@ -4,8 +4,7 @@ class UsersController < ApplicationController
     before_action :require_correct_user, only: [:edit, :update, :destroy]
     before_action :require_admin, only: [:destroy]
 
-    scope :by_name, -> {order(:name)}
-    scope :not_admins, -> { by_name.where(admin: false) }
+
 
     def index
         @users = User.not_admins
@@ -59,5 +58,6 @@ class UsersController < ApplicationController
     def require_correct_user
         @user = User.find(params[:id])
         redirect_to root_url unless current_user?(@user)
-      end
     end
+
+end

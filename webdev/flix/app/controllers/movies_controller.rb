@@ -1,13 +1,13 @@
 class MoviesController < ApplicationController
     before_action :require_signin, except: [:index, :show]
     before_action :require_admin, except: [:index, :show]
+    before_action :set_movie, only: [:show, :edit, :update, :destroy]
 
     def index
         @movies = Movie.send(movies_filter)
     end
     
     def show
-        @movie = Movie.find(params[:id])
         @genres = @movie.genres.order(:name)
         @fans = @movie.fans
         if current_user
@@ -16,11 +16,9 @@ class MoviesController < ApplicationController
     end
 
     def edit
-        @movie = Movie.find(params[:id])
     end
 
     def update
-        @movie = Movie.find(params[:id])
         flash[:notice] = "Movie successfully updated!"
         if @movie.update(movie_params)
             redirect_to(@movie)
@@ -44,7 +42,6 @@ class MoviesController < ApplicationController
     end
 
     def destroy
-        @movie = Movie.find(params[:id])
         flash[:alert] = "Movie successfully deleted!"
         @movie.destroy
         redirect_to(movies_url)
@@ -62,5 +59,10 @@ class MoviesController < ApplicationController
         else
           :released
         end
-      end
+    end
+    
+    private 
+    def set_movie
+        @movie = Movie.find_by!(slug: params[:id])
+    end
 end
