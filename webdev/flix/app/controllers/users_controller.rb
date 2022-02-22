@@ -4,8 +4,11 @@ class UsersController < ApplicationController
     before_action :require_correct_user, only: [:edit, :update, :destroy]
     before_action :require_admin, only: [:destroy]
 
+    scope :by_name, -> {order(:name)}
+    scope :not_admins, -> { by_name.where(admin: false) }
+
     def index
-        @users = User.all
+        @users = User.not_admins
     end
 
     def show
