@@ -1,4 +1,5 @@
-FROM ruby:3.0.2 as Builder
+# FASE 1
+FROM ruby:3.0.2 as Builder  
 
 ARG BUNDLE_WITHOUT="development test" 
 ARG RAILS_ENV="production"
@@ -14,20 +15,20 @@ RUN apt-get update && apt-get install -y \
   brotli \
   && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+WORKDIR /home/app
 
 # Install gems
-ADD Gemfile* /app/
+ADD Gemfile* /home/app/
 RUN bundle lock --add-platform x86_64-linux
 RUN bundle config --global frozen 1 \
-  && bundle install -j4 --retry 3 \
+  && bundle install -j4 --retry 3
   # Remove unneeded files (cached *.gem, *.o, *.c)
-  && rm -rf /usr/local/bundle/cache/*.gem \
-  && find /usr/local/bundle/gems/ -name "*.c" -delete \
-  && find /usr/local/bundle/gems/ -name "*.o" -delete
+  # && rm -rf /usr/local/bundle/cache/*.gem \
+  # && find /usr/local/bundle/gems/ -name "*.c" -delete \
+  # && find /usr/local/bundle/gems/ -name "*.o" -delete
 
 ###############################
-# Stage Final
+# FASE 2
 FROM ruby:3.0.2
 
 RUN apt-get update && apt-get install -y \
@@ -45,15 +46,16 @@ USER app
 COPY --from=Builder /usr/local/bundle/ /usr/local/bundle/
 
 USER root
-RUN mkdir -p /app/tmp/pids && chown -R app:app /app/tmp
-ADD --chown=app:app . /app
+RUN mkdir -p /home/app/tmp/pids && chown -R app:app /home/app/tmp
+ADD --chown=app:app . /home/app
+RUN chown -R app:app /home/app
 
 # Set Rails env
 ENV RAILS_LOG_TO_STDOUT true
 ENV RAILS_ENV production
 
 USER app
-WORKDIR /app
+WORKDIR /home/app
 
 # Start up
-CMD ["bundle", "exec", "rails", "db:migrate", "&&", "bundle", "exec", "puma", "-C", "config/puma.rb"]
+CMD ["bundle", "exec", "rails", "db:migrate", "&&", "bundle", "exec", "puma", "-C", "config/puma.rb"]~
