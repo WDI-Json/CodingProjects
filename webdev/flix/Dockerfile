@@ -15,9 +15,13 @@ RUN apt-get update && apt-get install -y \
   brotli \
   && rm -rf /var/lib/apt/lists/*
 
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt -y install nodejs && npm install -g yarn
+
 WORKDIR /home/app
 
 # Install gems
+RUN gem install libv8-node
 ADD Gemfile* /home/app/
 RUN bundle lock --add-platform x86_64-linux
 RUN bundle config --global frozen 1 \
@@ -58,4 +62,5 @@ USER app
 WORKDIR /home/app
 
 # Start up
-CMD ["bundle", "exec", "rails", "db:migrate", "&&", "bundle", "exec", "puma", "-C", "config/puma.rb"]~
+CMD ["bundle", "exec", "rails", "db:migrate", "&&", "bundle", "exec", "puma"]
+
