@@ -25,11 +25,11 @@ RUN gem install libv8-node
 ADD Gemfile* /home/app/
 RUN bundle lock --add-platform x86_64-linux
 RUN bundle config --global frozen 1 \
-  && bundle install -j4 --retry 3
+  && bundle install -j4 --retry 3 \
   # Remove unneeded files (cached *.gem, *.o, *.c)
-  # && rm -rf /usr/local/bundle/cache/*.gem \
-  # && find /usr/local/bundle/gems/ -name "*.c" -delete \
-  # && find /usr/local/bundle/gems/ -name "*.o" -delete
+  && rm -rf /usr/local/bundle/cache/*.gem \
+  && find /usr/local/bundle/gems/ -name "*.c" -delete \
+  && find /usr/local/bundle/gems/ -name "*.o" -delete
 
 ###############################
 # FASE 2
@@ -62,5 +62,6 @@ USER app
 WORKDIR /home/app
 
 # Start up
-CMD ["bundle", "exec", "rails", "db:migrate", "&&", "bundle", "exec", "puma"]
+#CMD ["bundle", "exec", "rails", "db:migrate", "&&", "bundle", "exec", "puma"]
+CMD ["sh", "-c", "bundle exec rails db:migrate; bundle exec puma"]
 

@@ -1,4 +1,4 @@
-# fly.toml file generated for flix on 2022-02-23T20:34:29+01:00
+# fly.toml file generated for flix on 2022-02-24T19:27:57+01:00
 
 app = "flix"
 
@@ -33,7 +33,7 @@ processes = []
     port = 443
 
   [[services.tcp_checks]]
-    grace_period = "10s"
-    interval = "15s"
+    grace_period = "60s"
+    interval = "30s"
     restart_limit = 0
     timeout = "20s"
