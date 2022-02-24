@@ -41,6 +41,9 @@ RUN apt-get update && apt-get install -y \
   tzdata \
   && rm -rf /var/lib/apt/lists/*
 
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt -y install nodejs && npm install -g yarn
+
 # Add user
 RUN groupadd -r app && useradd -r -g app app
 
@@ -53,6 +56,11 @@ USER root
 RUN mkdir -p /home/app/tmp/pids && chown -R app:app /home/app/tmp
 ADD --chown=app:app . /home/app
 RUN chown -R app:app /home/app
+
+RUN yarn install
+RUN SECRET_KEY_BASE=ABCDEFGHIJKLMNOPQRSTUVWXYZ01234 \
+    RAILS_ENV=production \
+    bundle exec rails assets:precompile
 
 # Set Rails env
 ENV RAILS_LOG_TO_STDOUT true
