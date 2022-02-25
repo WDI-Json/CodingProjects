@@ -183,22 +183,6 @@ movies.each do |movie|
   m = Movie.create!(movie)  
 end
 
-movie = Movie.find_by(title: "Captain Marvel")
-
-movie.reviews.create!(name: "Larry", stars: 5, comment: "Awesome!")
-movie.reviews.create!(name: "Daisy", stars: 4, comment: "Great!")
-movie.reviews.create!(name: "Moe", stars: 3, comment: "Spilled my popcorn!")
-
-movie = Movie.find_by(title: "Iron Man")
-movie.reviews.create!(name: "Barry", stars: 5, comment: "Great!")
-movie.reviews.create!(name: "Daisy", stars: 3, comment: "Loved part 2 more!")
-movie.reviews.create!(name: "Francis", stars: 4, comment: "Loved him in Avengers!")
-
-movie = Movie.find_by(title: "Black Panther")
-movie.reviews.create!(name: "TJ", stars: 5, comment: "WAKANDA FOREVER")
-
-movie = Movie.find_by(title: "Spider-Man")
-movie.reviews.create!(name: "Pim", stars: 5, comment: "I wish Willem Dafoe was my dad.")
 
 Genre.create(name: "Action")
 Genre.create(name: "Comedy")
