@@ -57,10 +57,6 @@ RUN mkdir -p /home/app/tmp/pids && chown -R app:app /home/app/tmp
 ADD --chown=app:app . /home/app
 RUN chown -R app:app /home/app
 
-RUN yarn install
-RUN SECRET_KEY_BASE=ABCDEFGHIJKLMNOPQRSTUVWXYZ01234 \
-    RAILS_ENV=production \
-    bundle exec rails assets:precompile
 
 # Set Rails env
 ENV RAILS_LOG_TO_STDOUT true
@@ -68,6 +64,10 @@ ENV RAILS_ENV production
 
 USER app
 WORKDIR /home/app
+
+RUN SECRET_KEY_BASE=ABCDEFGHIJKLMNOPQRSTUVWXYZ01234 \
+    RAILS_ENV=production \
+    bundle exec rails assets:precompile
 
 # Start up
 #CMD ["bundle", "exec", "rails", "db:migrate", "&&", "bundle", "exec", "puma"]
