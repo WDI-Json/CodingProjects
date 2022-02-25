@@ -61,6 +61,7 @@ RUN chown -R app:app /home/app
 # Set Rails env
 ENV RAILS_LOG_TO_STDOUT true
 ENV RAILS_ENV production
+ENV RAILS_SERVE_STATIC_FILES true
 
 USER app
 WORKDIR /home/app
