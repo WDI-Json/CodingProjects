@@ -1,6 +1,9 @@
 <%= form_with(model: user, local: true) do |f| %>
     <%= render "shared/errors", object: user %>
 
+    <%= f.label :profile_image %>
+    <%= f.file_field :profile_image %>
+
     <%= f.label :name %>
     <%= f.text_field :name, autofocus: true %>
 

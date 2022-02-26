@@ -12,6 +12,10 @@ processes = []
   allowed_public_ports = []
   auto_rollback = true
 
+[mounts]
+  source="flix_data"
+  destination="/data"
+
 [[services]]
   http_checks = []
   internal_port = 8080
@@ -37,3 +41,4 @@ processes = []
     interval = "30s"
     restart_limit = 0
     timeout = "20s"
+
