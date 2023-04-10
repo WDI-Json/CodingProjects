@@ -1,44 +1,55 @@
 import styles from "./App.module.css";
-import { Planet } from "./Planets";
 import { useState } from "react";
+import { TaskComp } from "./Task";
 
-// function App() {
-//   const planets = [
-//     { name: "Mars", isGasPlanet: false },
-//     { name: "Earth", isGasPlanet: false },
-//     { name: "Jupiter", isGasPlanet: true },
-//     { name: "Venus", isGasPlanet: false },
-//     { name: "Neptune", isGasPlanet: true },
-//     { name: "Uranus", isGasPlanet: true },
-//   ];
-
-//   return (
-//     <div className={styles.App}>
-//       {planets.map((planet, key) => {
-//         return <Planet name={planet.name} isGasPlanet={planet.isGasPlanet} />
-//       })}
-//     </div>
-//   );
-// }
 function App() {
-  const [count, setNumber] = useState(0);
+  const [todoList, setTodoList] = useState([]);
+  const [newTask, setNewtask] = useState("")
+
+  const handleChange = (event) => {
+    setNewtask(event.target.value)
+  };
+
+  const addTask = () => {
+    const task = {
+      id: todoList.length === 0 ? 1 : todoList[todoList.length - 1].id + 1,
+      taskName: newTask,
+    }
+    setTodoList([...todoList, task])
+  }
+
+  const deleteTask = (taskId) => {
+    setTodoList(todoList.filter((task) => task.id !== taskId));
+  }
+
+  const completeTask = (id) => {
+    setTodoList(
+      todoList.map((task) => {
+        return task.id === id ? { ...task, completed: true } : task;
+      })
+    );
+  };
 
   return (
     <div className={styles.App}>
-      <button onClick={() => {
-        setNumber(count + 1)
-      }}>Increase</button>
-
-      <button onClick={() => {
-        setNumber(count - 1)
-      }}>Decrease</button>
-
-      <button onClick={() => {
-        setNumber(0)
-      }}>Reset to 0</button>
-
-      <h1>Current number is {count}</h1>
-    </div >
+      <div className={styles.addTask}>
+        <input onChange={handleChange} />
+        <button onClick={addTask}> Add Task</button>
+      </div>
+      <div className={styles.list}>
+        {todoList.map((task) => {
+          return (
+            <TaskComp
+              taskName={task.taskName}
+              id={task.id}
+              completed={task.completed}
+              deleteTask={deleteTask}
+              completeTask={completeTask}
+            />
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
