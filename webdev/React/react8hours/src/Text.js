@@ -1,8 +1,15 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const Text = (props) => {
     const [text, setText] = useState("");
+
+    useEffect(() => {
+        console.log("Component mounted")
+        return () => {
+            console.log("Component unmounted")
+        }
+    }, [])
     return (
         <div>
             <input
