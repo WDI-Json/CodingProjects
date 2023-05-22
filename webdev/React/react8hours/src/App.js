@@ -7,6 +7,9 @@ import { Navbar } from "./pages/Navbar";
 import { useState, createContext } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Form } from "./pages/Form";
+import { useToggle } from "./Components/useToggle";
+import { Cat } from "./Components/Cat";
+import { CounterPage } from "./pages/CounterPage";
 export const AppContext = createContext();
 
 function App() {
@@ -19,6 +22,9 @@ function App() {
     }
   })
 
+  const [isVisible, toggle] = useToggle()
+  const [isVisible2, toggle2] = useToggle()
+
   return (
     <div className={styles.App}>
       <QueryClientProvider client={client}>
@@ -29,13 +35,20 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/counter" element={<CounterPage />} />
               <Route path="*" element={<h1> PAGE NOT FOUND</h1>} />
             </Routes>
           </Router>
         </AppContext.Provider>
       </QueryClientProvider>
-      <Form />
-    </div>
+
+
+      <button onClick={toggle}>{isVisible ? "Hide" : "Show"}</button>
+      {isVisible && <h1>Hidden text!</h1>}
+      <button onClick={toggle2}>{isVisible2 ? "Hide" : "Show"}</button>
+      {isVisible2 && <h1>Hidden text2!</h1>}
+
+    </div >
   );
 }
 
