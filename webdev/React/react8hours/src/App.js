@@ -6,6 +6,7 @@ import { Contact } from "./pages/Contact";
 import { Navbar } from "./pages/Navbar";
 import { useState, createContext } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Form } from "./pages/Form";
 export const AppContext = createContext();
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           </Router>
         </AppContext.Provider>
       </QueryClientProvider>
+      <Form />
     </div>
   );
 }

@@ -45,3 +45,7 @@ body {
   margin-left: 5px;
   text-align: center;
 }
+
+.error {
+  color: red
+}
