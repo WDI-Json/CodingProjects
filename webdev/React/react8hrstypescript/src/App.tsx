@@ -1,47 +1,25 @@
-import './App.css';
-import { Person, Country, Props } from './components/Person';
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Home } from "./pages/home";
+import { Contact } from "./pages/contact";
+import { Login } from "./pages/login";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 function App() {
-
-const persons: Props[] = [
-  {
-    name: "John",
-    email: "john@example.com",
-    age: 25,
-    isMarried: false,
-    friends: [],
-    country: Country.Brazil
-},
-{
-    name: "Emily",
-    email: "emily@example.com",
-    age: 30,
-    isMarried: true,
-    friends: [],
-    country: Country.Canada
-},
-{
-    name: "Michael",
-    email: "michael@example.com",
-    age: 35,
-    isMarried: true,
-    friends: [],
-    country: Country.France
-}
-]
-
-
-
   return (
     <div className="App">
-      <Person
-                name="Wouter"
-                email="Wouter@mail.com"
-                age={29}
-                isMarried={true}
-                friends={persons}
-                country= {Country.Brazil}
-            />
+      <Provider store={store}>
+        <Router>
+          <Link to="/"> Home </Link>
+          <Link to="/login"> Login </Link>
+          <Link to="/contact"> Contact </Link>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </Router>
+      </Provider>
     </div>
   );
 }
