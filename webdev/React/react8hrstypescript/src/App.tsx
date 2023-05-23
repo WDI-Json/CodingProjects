@@ -1,24 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Person, Country, Props } from './components/Person';
 
 function App() {
+
+const persons: Props[] = [
+  {
+    name: "John",
+    email: "john@example.com",
+    age: 25,
+    isMarried: false,
+    friends: [],
+    country: Country.Brazil
+},
+{
+    name: "Emily",
+    email: "emily@example.com",
+    age: 30,
+    isMarried: true,
+    friends: [],
+    country: Country.Canada
+},
+{
+    name: "Michael",
+    email: "michael@example.com",
+    age: 35,
+    isMarried: true,
+    friends: [],
+    country: Country.France
+}
+]
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Person
+                name="Wouter"
+                email="Wouter@mail.com"
+                age={29}
+                isMarried={true}
+                friends={persons}
+                country= {Country.Brazil}
+            />
     </div>
   );
 }
