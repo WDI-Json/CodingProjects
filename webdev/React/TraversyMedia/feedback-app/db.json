@@ -18,7 +18,7 @@
     {
       "id": 4,
       "text": "This is a postrequest which I made through postman!",
-      "rating": "8"
+      "rating": 8
     }
   ]
 }
