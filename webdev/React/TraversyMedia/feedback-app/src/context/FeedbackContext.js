@@ -39,6 +39,13 @@ export const FeedbackProvider = ({ children }) => {
       edit: true,
     })
   }
+  const updateFeedback = (id, updatedItem) => {
+    setFeedback(
+      feedback.map((item) =>
+        item.id === id ? { ...item, ...updatedItem } : item
+      )
+    )
+  }
 
   const addFeedback = (newFeedback) => {
     newFeedback.id = uuidv4()
@@ -53,6 +60,7 @@ export const FeedbackProvider = ({ children }) => {
         addFeedback,
         editFeedback,
         feedbackEdit,
+        updateFeedback,
       }}
     >
       {children}
