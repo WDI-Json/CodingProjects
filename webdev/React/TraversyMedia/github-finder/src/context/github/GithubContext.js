@@ -9,6 +9,7 @@ const GITHUB_TOKEN = "add later"
 export const GithubProvider = ({ children }) => {
   const initialState = {
     users: [],
+    user: {},
     loading: false,
   }
 
@@ -36,6 +37,30 @@ export const GithubProvider = ({ children }) => {
     })
   }
 
+  const getUser = async (login) => {
+    setLoading()
+
+    const response = await fetch(
+      `${GITHUB_URL}/users/${login}`
+      //* you did not use a token
+      //     , {
+      //         headers: {
+      //         Authorization: `token ${GITHUB_TOKEN}`
+      //     }
+      //   }
+    )
+
+    if (response.status === 404) {
+      window.location = "/notfound"
+    } else {
+      const data = await response.json()
+      dispatch({
+        type: "GET_USER",
+        payload: data,
+      })
+    }
+  }
+
   const setLoading = () => {
     dispatch({ type: "SET_LOADING" })
   }
@@ -49,9 +74,11 @@ export const GithubProvider = ({ children }) => {
     <GithubContext.Provider
       value={{
         users: state.users,
+        user: state.user,
         loading: state.loading,
         searchUsers,
         clearUsers,
+        getUser,
       }}
     >
       {children}
