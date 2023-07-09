@@ -37,7 +37,7 @@ function RepoItem({ repo }) {
           </div>
           <div className="mr-2 badge badge-warning badge-lg">
             <FaUtensils className="mr-2" />
-            {watchers_count}
+            {forks}
           </div>
         </div>
       </div>

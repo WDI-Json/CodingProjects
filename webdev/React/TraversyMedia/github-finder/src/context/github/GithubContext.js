@@ -4,6 +4,7 @@ import githubReducer from "./GithubReducer"
 const GithubContext = createContext()
 
 const GITHUB_URL = process.env.REACT_APP_GITHUB_URL
+// eslint-disable-next-line
 const GITHUB_TOKEN = "add later"
 
 export const GithubProvider = ({ children }) => {
