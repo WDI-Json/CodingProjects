@@ -1,4 +1,3 @@
-import React from "react"
 import PropTypes from "prop-types"
 import RepoItem from "./RepoItem"
 
@@ -20,4 +19,5 @@ function RepoList({ repos }) {
 RepoList.propTypes = {
   repos: PropTypes.array.isRequired,
 }
+
 export default RepoList
