@@ -1,4 +1,5 @@
-import UseCallbackExample from "./components/UseCallbackExample";
+import CustomHookExample1 from "./components/CustomHookExample1"
+import UseCallbackExample from "./components/UseCallbackExample"
 // import UseMemoExample from "./components/UseMemoExample";
 // import UseRefExample1 from "./components/UseRefExample1";
 // import UseRefExample2 from "./components/UseRefExample2";
@@ -11,9 +12,10 @@ function App() {
       {/* <UseRefExample2 /> */}
       {/* <UseRefExample3 /> */}
       {/* <UseMemoExample /> */}
-      <UseCallbackExample />
+      {/* <UseCallbackExample /> */}
+      <CustomHookExample1 />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
