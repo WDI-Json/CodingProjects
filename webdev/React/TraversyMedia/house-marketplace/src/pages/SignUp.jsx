@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth"
+import { setDoc, doc, serverTimestamp } from "firebase/firestore"
 import { db } from "../firebase.config"
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg"
 import visibilityIcon from "../assets/svg/visibilityIcon.svg"
@@ -12,11 +13,12 @@ import visibilityIcon from "../assets/svg/visibilityIcon.svg"
 function SignUp() {
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   })
-  const { name, email, password } = formData
+  const { firstName, lastName, email, password } = formData
 
   const navigate = useNavigate()
   const onChange = (e) => {
@@ -40,8 +42,14 @@ function SignUp() {
       const user = userCredential.user
 
       updateProfile(auth.currentUser, {
-        displayName: name,
+        displayName: firstName,
       })
+      const formDataCopy = { ...formData }
+      delete formDataCopy.password
+      formDataCopy.timestamp = serverTimestamp()
+
+      await setDoc(doc(db, "users", user.uid), formDataCopy)
+
       navigate("/")
     } catch (error) {
       console.log(error)
@@ -59,9 +67,17 @@ function SignUp() {
             <input
               type="text"
               className="nameInput"
-              placeholder="Name"
-              id="name"
-              value={name}
+              placeholder="First Name"
+              id="firstName"
+              value={firstName}
+              onChange={onChange}
+            />
+            <input
+              type="text"
+              className="nameInput"
+              placeholder="Last Name"
+              id="lastName"
+              value={lastName}
               onChange={onChange}
             />
             <input
