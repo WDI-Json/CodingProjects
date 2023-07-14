@@ -71,7 +71,8 @@ function CreateListing() {
   const onSubmit = async (e) => {
     e.preventDefault()
 
-    if (discountedPrice > regularPrice) {
+    if (parseFloat(discountedPrice) >= parseFloat(regularPrice)) {
+      console.log(discountedPrice >= regularPrice)
       setLoading(false)
       toast.error("Discounted price can't be higher than regular price!")
       return
@@ -153,7 +154,7 @@ function CreateListing() {
       })
     }
 
-    const imgUrls = await Promise.all(
+    const imageUrls = await Promise.all(
       [...images].map((image) => storeImage(image))
     ).catch(() => {
       setLoading(false)
@@ -163,7 +164,7 @@ function CreateListing() {
 
     const formDataCopy = {
       ...formData,
-      imgUrls,
+      imageUrls,
       geolocation,
       timestamp: serverTimestamp(),
     }
