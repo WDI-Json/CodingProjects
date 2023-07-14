@@ -13,6 +13,7 @@ import Category from "./pages/Category"
 // Components
 import Navbar from "./components/Navbar"
 import PrivateRoute from "./components/PrivateRoute"
+import CreateListing from "./pages/CreateListing"
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/create-listing" element={<CreateListing />} />
         </Routes>
         <Navbar />
       </Router>
