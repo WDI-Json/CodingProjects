@@ -74,15 +74,19 @@ button {
 
 .removeIcon {
   cursor: pointer;
-  /* position: absolute; */
+  position: relative;
+  top: -2.5rem;
+  right: 25%;
   /* top: -3%;
   right: -2%; */
 }
 .editIcon {
   cursor: pointer;
-  /* position: absolute; */
+  position: relative;
   /* top: -3.4%;
   right: 20px; */
+  top: -2.5rem;
+  right: 25%;
 }
 
 .pageContainer,
@@ -429,12 +433,6 @@ button {
   width: 65%;
   display: flex;
   flex-direction: column;
-}
-
-.editAndDelete {
-  position: relative;
-  right: -5rem;
-  top: -5rem;
 }
 
 @media (min-width: 1024px) {
