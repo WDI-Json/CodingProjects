@@ -66,6 +66,11 @@ export const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isSucces = true;
+        state.isLoading = false;
       });
   },
 });
