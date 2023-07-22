@@ -6,7 +6,7 @@ import BackButton from "../components/BackButton";
 import TicketItem from "../components/TicketItem";
 
 function Tickets() {
-  const { user } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.auth);
   const { tickets, isLoading, isSucces } = useSelector((state) => state.ticket);
 
   const dispatch = useDispatch();
