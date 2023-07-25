@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { FaUser } from "react-icons/fa"
@@ -19,28 +19,7 @@ function Register() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { user, isError, isSucces, isLoading, message } = useSelector(
-    (state) => state.auth
-  )
-
-  useEffect(() => {
-    if (isError) {
-      toast.error(message)
-    }
-
-    // Redirect when logged in
-    if (isSucces || user) {
-      navigate("/")
-    }
-    // dispatch(reset())
-  }, [isError, isSucces, user, message, navigate, dispatch])
-
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }))
-  }
+  const { isLoading } = useSelector((state) => state.auth)
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -54,13 +33,25 @@ function Register() {
         password,
       }
       dispatch(register(userData))
+        .unwrap()
+        .then((user) => {
+          toast.success(`Registered new user - ${user.name}`)
+          navigate("/")
+        })
+        .catch(toast.error)
     }
   }
 
-  if (isLoading) {
-    return <Spinner />
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }))
   }
-  return (
+
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <>
       <section className="heading">
         <h1>
