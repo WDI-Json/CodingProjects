@@ -8,7 +8,10 @@ function Home() {
   return (
     <>
       <section className="heading">
-        <h1>{user && `Welcome ${user.name},`} What do you need help with?</h1>
+        <h1>
+          {user && `Welcome ${user.name},`} <br></br> What do you need help
+          with?
+        </h1>
         <p>Please choose from an option below</p>
       </section>
 
