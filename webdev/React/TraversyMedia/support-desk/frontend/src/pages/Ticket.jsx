@@ -5,7 +5,11 @@ import { FaPlus } from "react-icons/fa"
 import { useSelector, useDispatch } from "react-redux"
 import { useParams, useNavigate } from "react-router-dom"
 
-import { getTicket, closeTicket } from "../features/tickets/ticketSlice"
+import {
+  getTicket,
+  closeTicket,
+  activateTicket,
+} from "../features/tickets/ticketSlice"
 import { getNotes, createNote } from "../features/notes/noteSlice"
 
 import BackButton from "../components/BackButton"
@@ -39,9 +43,13 @@ function Ticket() {
 
   useEffect(() => {
     dispatch(getTicket(ticketId)).unwrap().catch(toast.error)
-
     dispatch(getNotes(ticketId)).unwrap().catch(toast.error)
-  }, [ticketId, dispatch])
+
+    if (ticket?.status === "new") {
+      // After receiving the ticket we want to change te status to open if current status is new
+      dispatch(activateTicket(ticketId)).unwrap().catch(toast.error)
+    }
+  }, [ticketId, dispatch, ticket?.status])
 
   const onTicketClose = () => {
     dispatch(closeTicket(ticketId))

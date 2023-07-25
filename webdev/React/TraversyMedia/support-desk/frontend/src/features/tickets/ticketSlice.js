@@ -55,6 +55,18 @@ export const closeTicket = createAsyncThunk(
   }
 )
 
+export const activateTicket = createAsyncThunk(
+  "tickets/activate",
+  async (ticketId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await ticketService.activateTicket(ticketId, token)
+    } catch (error) {
+      return thunkAPI.rejectWithValue(extractErrorMessage(error))
+    }
+  }
+)
+
 export const ticketSlice = createSlice({
   name: "ticket",
   initialState,
@@ -70,6 +82,12 @@ export const ticketSlice = createSlice({
         state.ticket = action.payload
       })
       .addCase(closeTicket.fulfilled, (state, action) => {
+        state.ticket = action.payload
+        state.tickets = state.tickets.map((ticket) =>
+          ticket._id === action.payload._id ? action.payload : ticket
+        )
+      })
+      .addCase(activateTicket.fulfilled, (state, action) => {
         state.ticket = action.payload
         state.tickets = state.tickets.map((ticket) =>
           ticket._id === action.payload._id ? action.payload : ticket
