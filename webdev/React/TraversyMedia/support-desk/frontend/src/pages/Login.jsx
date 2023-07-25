@@ -11,26 +11,12 @@ function Login() {
     email: "",
     password: "",
   })
-
   const { email, password } = formData
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { user, isError, isSucces, isLoading, message } = useSelector(
-    (state) => state.auth
-  )
 
-  useEffect(() => {
-    if (isError) {
-      toast.error(message)
-    }
-
-    // Redirect when logged in
-    if (isSucces || user) {
-      navigate("/")
-    }
-    // dispatch(reset())
-  }, [isError, isSucces, user, message, navigate, dispatch])
+  const { isLoading } = useSelector((state) => state.auth)
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -47,13 +33,17 @@ function Login() {
       password,
     }
     dispatch(login(userData))
+      .unwrap()
+      .then((user) => {
+        toast.success(`Logged in as ${user.name}`)
+        navigate("/")
+      })
+      .catch(toast.error)
   }
 
-  if (isLoading) {
-    return <Spinner />
-  }
-
-  return (
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <>
       <section className="heading">
         <h1>
