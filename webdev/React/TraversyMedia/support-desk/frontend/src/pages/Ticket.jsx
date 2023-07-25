@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import Modal from "react-modal";
-import { FaPlus } from "react-icons/fa";
+import { useEffect, useState } from "react"
+import { toast } from "react-toastify"
+import Modal from "react-modal"
+import { FaPlus } from "react-icons/fa"
+import { useSelector, useDispatch } from "react-redux"
+import { useParams, useNavigate } from "react-router-dom"
 
-import { getTicket, closeTicket } from "../features/tickets/ticketSlice";
-import { getNotes, createNote } from "../features/notes/noteSlice";
+import { getTicket, closeTicket } from "../features/tickets/ticketSlice"
+import { getNotes, createNote } from "../features/notes/noteSlice"
 
-import Spinner from "../components/Spinner";
-import BackButton from "../components/BackButton";
-import NoteItem from "../components/NoteItem";
+import BackButton from "../components/BackButton"
+import Spinner from "../components/Spinner"
+import NoteItem from "../components/NoteItem"
 
 const customStyles = {
   content: {
@@ -23,60 +23,54 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     position: "relative",
   },
-};
+}
 
-Modal.setAppElement("#root");
+Modal.setAppElement("#root")
 
 function Ticket() {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [noteText, setNoteText] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [noteText, setNoteText] = useState("")
+  const { ticket } = useSelector((state) => state.ticket)
+  const { notes } = useSelector((state) => state.notes)
 
-  const { ticket, isLoading, isError, message } = useSelector(
-    (state) => state.ticket
-  );
-  const { notes, isLoading: notesIsLoading } = useSelector(
-    (state) => state.notes
-  );
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { ticketId } = useParams();
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { ticketId } = useParams()
 
   useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
+    dispatch(getTicket(ticketId)).unwrap().catch(toast.error)
 
-    dispatch(getTicket(ticketId));
-    dispatch(getNotes(ticketId));
-    // eslint-disable-next-line
-  }, [isError, message, ticketId]);
+    dispatch(getNotes(ticketId)).unwrap().catch(toast.error)
+  }, [ticketId, dispatch])
 
   const onTicketClose = () => {
-    dispatch(closeTicket(ticketId));
-    toast.success("Ticket Closed");
-    navigate("/tickets");
-  };
+    dispatch(closeTicket(ticketId))
+      .unwrap()
+      .then(() => {
+        toast.success("Ticket Closed")
+        navigate("/tickets")
+      })
+      .catch(toast.error)
+  }
 
   const onNoteSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    dispatch(createNote({ noteText, ticketId }));
-    closeModal();
-  };
-
-  const openModal = () => setModalIsOpen(true);
-  const closeModal = () => setModalIsOpen(false);
-
-  if (isLoading || notesIsLoading) {
-    return <Spinner />;
+    dispatch(createNote({ noteText, ticketId }))
+      .unwrap()
+      .then(() => {
+        setNoteText("")
+        closeModal()
+      })
+      .catch(toast.error)
   }
 
-  if (isError) {
-    return <h3>Something went wrong</h3>;
-  }
+  const openModal = () => setModalIsOpen(true)
+  const closeModal = () => setModalIsOpen(false)
 
-  return (
+  return !ticket ? (
+    <Spinner />
+  ) : (
     <div className="ticket-page">
       <header className="ticket-header">
         <BackButton url={"/tickets"} />
@@ -95,7 +89,7 @@ function Ticket() {
           <h3>Description of Issue</h3>
           <p>{ticket.description}</p>
         </div>
-        {notes.length > 0 && <h2>Notes</h2>}
+        {notes?.length > 0 && <h2>Notes</h2>}
       </header>
 
       {ticket.status !== "closed" && (
@@ -134,15 +128,18 @@ function Ticket() {
         </form>
       </Modal>
 
-      {notes.map((note) => (
-        <NoteItem key={note._id} note={note} />
-      ))}
+      {notes ? (
+        notes.map((note) => <NoteItem key={note._id} note={note} />)
+      ) : (
+        <Spinner />
+      )}
+
       {ticket.status !== "closed" && (
         <button onClick={onTicketClose} className="btn btn-block btn-danger">
           Close Ticket
         </button>
       )}
     </div>
-  );
+  )
 }
-export default Ticket;
+export default Ticket

@@ -1,13 +1,13 @@
 import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { getTickets } from "../features/tickets/ticketSlice"
+
 import Spinner from "../components/Spinner"
 import BackButton from "../components/BackButton"
 import TicketItem from "../components/TicketItem"
 
 function Tickets() {
-  // const { user } = useSelector((state) => state.auth);
-  const { tickets, isLoading } = useSelector((state) => state.ticket)
+  const { tickets } = useSelector((state) => state.ticket)
 
   const dispatch = useDispatch()
 
@@ -15,11 +15,9 @@ function Tickets() {
     dispatch(getTickets())
   }, [dispatch])
 
-  if (isLoading) {
-    ;<Spinner />
-  }
-
-  return (
+  return !tickets ? (
+    <Spinner />
+  ) : (
     <>
       <BackButton url="/" />
       <h1>Tickets</h1>
