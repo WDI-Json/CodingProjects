@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { FaUser } from "react-icons/fa";
-import { useSelector, useDispatch } from "react-redux";
-import { register, reset } from "../features/auth/authSlice";
-import Spinner from "../components/Spinner";
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import { FaUser } from "react-icons/fa"
+import { useSelector, useDispatch } from "react-redux"
+import { register } from "../features/auth/authSlice"
+import Spinner from "../components/Spinner"
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -12,53 +12,53 @@ function Register() {
     email: "",
     password: "",
     password2: "",
-  });
+  })
 
-  const { name, email, password, password2 } = formData;
+  const { name, email, password, password2 } = formData
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { user, isError, isSucces, isLoading, message } = useSelector(
     (state) => state.auth
-  );
+  )
 
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      toast.error(message)
     }
 
     // Redirect when logged in
     if (isSucces || user) {
-      navigate("/");
+      navigate("/")
     }
-    dispatch(reset());
-  }, [isError, isSucces, user, message, navigate, dispatch]);
+    // dispatch(reset())
+  }, [isError, isSucces, user, message, navigate, dispatch])
 
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
-    }));
-  };
+    }))
+  }
 
   const onSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (password !== password2) {
-      toast.error("Passwords do not match!");
+      toast.error("Passwords do not match!")
     } else {
       const userData = {
         name,
         email,
         password,
-      };
-      dispatch(register(userData));
+      }
+      dispatch(register(userData))
     }
-  };
+  }
 
   if (isLoading) {
-    return <Spinner />;
+    return <Spinner />
   }
   return (
     <>
@@ -124,6 +124,6 @@ function Register() {
         </form>
       </section>
     </>
-  );
+  )
 }
-export default Register;
+export default Register
