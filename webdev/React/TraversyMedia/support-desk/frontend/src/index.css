@@ -185,11 +185,6 @@ h3 {
   transform: scale(0.98);
 }
 
-.tickets {
-  display: flex;
-  flex-direction: column;
-}
-
 .ticket-created {
   border: 1px solid #e6e6e6;
   border-radius: 5px;
@@ -211,6 +206,15 @@ h3 {
 
 .ticket-info {
   font-size: 1.3rem;
+}
+
+.tickets {
+  display: flex;
+  flex-direction: column;
+}
+
+.tickets-page-header {
+  text-align: start;
 }
 
 .ticket,
