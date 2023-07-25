@@ -1,30 +1,22 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getTickets, reset } from "../features/tickets/ticketSlice";
-import Spinner from "../components/Spinner";
-import BackButton from "../components/BackButton";
-import TicketItem from "../components/TicketItem";
+import { useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { getTickets } from "../features/tickets/ticketSlice"
+import Spinner from "../components/Spinner"
+import BackButton from "../components/BackButton"
+import TicketItem from "../components/TicketItem"
 
 function Tickets() {
   // const { user } = useSelector((state) => state.auth);
-  const { tickets, isLoading, isSucces } = useSelector((state) => state.ticket);
+  const { tickets, isLoading } = useSelector((state) => state.ticket)
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    return () => {
-      if (isSucces) {
-        dispatch(reset());
-      }
-    };
-  }, [dispatch, isSucces]);
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getTickets());
-  }, [dispatch]);
+    dispatch(getTickets())
+  }, [dispatch])
 
   if (isLoading) {
-    <Spinner />;
+    ;<Spinner />
   }
 
   return (
@@ -43,6 +35,6 @@ function Tickets() {
         ))}
       </div>
     </>
-  );
+  )
 }
-export default Tickets;
+export default Tickets

@@ -1,45 +1,42 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { createTicket, reset } from "../features/tickets/ticketSlice";
-import Spinner from "../components/Spinner";
-import BackButton from "../components/BackButton";
+import { useState, useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import { createTicket } from "../features/tickets/ticketSlice"
+import Spinner from "../components/Spinner"
+import BackButton from "../components/BackButton"
 
 function NewTicket() {
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth)
   const { isLoading, isError, isSucces, message } = useSelector(
     (state) => state.ticket
-  );
+  )
 
-  const [product, setProduct] = useState("iPhone");
-  const [description, setDescription] = useState("");
-  const { name, email } = user;
+  const [product, setProduct] = useState("iPhone")
+  const [description, setDescription] = useState("")
+  const { name, email } = user
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      toast.error(message)
     }
 
     if (isSucces) {
-      dispatch(reset());
-      navigate("/tickets");
+      navigate("/tickets")
     }
-
-    dispatch(reset());
-  }, [dispatch, isError, isSucces, navigate, message]);
+  }, [dispatch, isError, isSucces, navigate, message])
 
   const onSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    dispatch(createTicket({ product, description }));
-  };
+    dispatch(createTicket({ product, description }))
+  }
 
   if (isLoading) {
-    <Spinner />;
+    ;<Spinner />
   }
   return (
     <>
@@ -91,6 +88,6 @@ function NewTicket() {
         </form>
       </section>
     </>
-  );
+  )
 }
-export default NewTicket;
+export default NewTicket
