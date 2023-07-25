@@ -1,15 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 function TicketItem({ ticket }) {
   return (
-    <div className="ticket">
-      <div>{new Date(ticket.createdAt).toLocaleString("en-gb")}</div>
-      <div>{ticket.product}</div>
-      <div className={`status status-${ticket.status}`}>{ticket.status}</div>
-      <Link to={`/ticket/${ticket._id}`} className="btn btn-reverse btn-sm">
-        View
-      </Link>
-    </div>
-  );
+    <tr className="ticket">
+      <td>{new Date(ticket.createdAt).toLocaleString("en-gb")}</td>
+      <td>{ticket.product}</td>
+      <td className={`status status-${ticket.status}`}>{ticket.status}</td>
+      <td>
+        <Link to={`/ticket/${ticket._id}`} className="btn btn-reverse btn-sm">
+          View
+        </Link>
+      </td>
+    </tr>
+  )
 }
-export default TicketItem;
+export default TicketItem

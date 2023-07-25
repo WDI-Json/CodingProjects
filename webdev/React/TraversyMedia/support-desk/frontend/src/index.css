@@ -185,6 +185,11 @@ h3 {
   transform: scale(0.98);
 }
 
+.tickets {
+  display: flex;
+  flex-direction: column;
+}
+
 .ticket-created {
   border: 1px solid #e6e6e6;
   border-radius: 5px;

@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { getTickets } from "../features/tickets/ticketSlice"
 
@@ -21,16 +21,24 @@ function Tickets() {
     <>
       <BackButton url="/" />
       <h1>Tickets</h1>
-      <div className="tickets">
-        <div className="ticket-headings">
-          <div>Date</div>
-          <div>Product</div>
-          <div>Status</div>
-          <div></div>
-        </div>
-        {tickets.map((ticket) => (
-          <TicketItem key={ticket.id} ticket={ticket} />
-        ))}
+      <div>
+        <table className="tickets">
+          <thead>
+            <tr className="ticket-headings">
+              <th>Date</th>
+              <th>Product</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {tickets.map((ticket) => (
+              <React.Fragment key={ticket._id}>
+                <TicketItem ticket={ticket} />
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
       </div>
     </>
   )
