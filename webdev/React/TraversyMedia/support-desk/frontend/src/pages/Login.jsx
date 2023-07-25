@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { toast } from "react-toastify"
 import { FaSignInAlt } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
