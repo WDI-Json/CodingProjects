@@ -7,6 +7,15 @@ const testUser = {
   password: "123456",
 }
 
+async function loginWith(page, email, password) {
+  await page.getByRole("link", { name: "Login" }).click()
+
+  await page.getByPlaceholder("Enter your email").fill(email)
+  await page.getByPlaceholder("Enter your password").fill(password)
+
+  await page.getByRole("button", { name: "Submit" }).click()
+}
+
 test.beforeEach(async ({ page }, testInfo) => {
   console.log(`Running ${testInfo.title}`)
   await page.goto(landingPage)
@@ -14,53 +23,41 @@ test.beforeEach(async ({ page }, testInfo) => {
 
 test.describe("Accessibility", () => {
   test("Has title", async ({ page }) => {
-    await page.goto(landingPage)
     await expect(page).toHaveTitle("Support Desk")
   })
 })
 
 test.describe("Login", () => {
-  test("Land through URL", async ({ page }) => {
+  test("Land on the login page by going straight to the /login", async ({
+    page,
+  }) => {
     await page.goto(landingPage + "login")
     expect(page.url()).toBe(landingPage + "login")
   })
 
-  test("Land by button", async ({ page }) => {
-    await page.getByRole("link", { name: "Login" }).click()
+  test("Land on the loginpage by clicking the login button", async ({
+    page,
+  }) => {
+    await loginWith(page, testUser.email, testUser.password)
     expect(page.url()).toBe(landingPage + "login")
   })
 
-  test("Successful lowercase", async ({ page }) => {
-    await page.goto(landingPage)
-    await page.getByRole("link", { name: "Login" }).click()
-    await page.getByPlaceholder("Enter your email").fill(testUser.email)
-    await page.getByPlaceholder("Enter your password").fill(testUser.password)
-    await page.getByRole("button", { name: "Submit" }).click()
+  test("Succesful login should redirect to main page", async ({ page }) => {
+    await loginWith(page, testUser.email, testUser.password)
     await page.waitForURL(landingPage)
-    await expect(page.url()).toBe(landingPage)
+    expect(page.url()).toBe(landingPage)
   })
 
-  test("Successful uppercase", async ({ page }) => {
-    await page.goto(landingPage)
-    await page.getByRole("link", { name: "Login" }).click()
-    await page
-      .getByPlaceholder("Enter your email")
-      .fill(testUser.email.toUpperCase())
-    await page.getByPlaceholder("Enter your password").fill(testUser.password)
-    await page.getByRole("button", { name: "Submit" }).click()
+  test("Succesful login should be case-insensitive", async ({ page }) => {
+    await loginWith(page, testUser.email.toUpperCase(), testUser.password)
     await page.waitForURL(landingPage)
-    await expect(page.url()).toBe(landingPage)
+    expect(page.url()).toBe(landingPage)
   })
 
-  test("Failed", async ({ page }) => {
-    await page.goto(landingPage)
-    await page.getByRole("link", { name: "Login" }).click()
-    await page.getByPlaceholder("Enter your email").fill(testUser.email)
-    await page
-      .getByPlaceholder("Enter your password")
-      .fill(testUser.password + "gibberish")
-    await page.getByRole("button", { name: "Submit" }).click()
-    await setTimeout(500)
+  test("Invalid credentials given should not redirect to main page", async ({
+    page,
+  }) => {
+    await loginWith(page, testUser.email, testUser.password + "gibberish")
     expect(page.url()).toBe(landingPage + "login")
   })
 })
