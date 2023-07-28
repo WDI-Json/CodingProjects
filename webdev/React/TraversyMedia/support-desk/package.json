@@ -26,6 +26,7 @@
     "@cucumber/cucumber": "^9.3.0",
     "@playwright/test": "^1.36.2",
     "hamjest": "^4.0.1",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "playwright": "^1.36.2"
   }
 }
