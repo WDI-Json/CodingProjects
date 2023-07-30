@@ -1,5 +1,5 @@
 const { Given, When, Then } = require("@cucumber/cucumber");
-const { test, expect } = require("@playwright/test");
+const { expect } = require("@playwright/test");
 
 const baseUrl = "http://localhost:3000/";
 

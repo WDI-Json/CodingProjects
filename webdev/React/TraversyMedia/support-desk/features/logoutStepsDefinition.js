@@ -25,7 +25,6 @@ When("he clicks logout", async function () {
 });
 
 Then("he is not able to look at his tickets", async function () {
-  await this.page.waitForURL(baseUrl);
   await this.page.getByRole("link", { name: "View my Tickets" }).click();
-  expect(this.page.url()).toBe(baseUrl);
+  expect(this.page.url()).toBe(baseUrl + "login");
 });
