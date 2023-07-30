@@ -17,6 +17,3 @@ Feature: creating a ticket
     And Alex should be taken to the ticket creation page
     When Alex fills in fields and submits the ticket
     Then Alex should see an alert-message/succes-message
-
-
-    
