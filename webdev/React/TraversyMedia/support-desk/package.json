@@ -8,11 +8,12 @@
     "server": "nodemon backend/server.js",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "cucumber-js"
+    "test": "cucumber-js -f @cucumber/pretty-formatter"
   },
   "author": "Wouter Dijks",
   "license": "MIT",
   "dependencies": {
+    "@cucumber/pretty-formatter": "^1.0.0",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "concurrently": "^8.2.0",
