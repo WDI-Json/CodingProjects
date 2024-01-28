@@ -2,15 +2,20 @@ defmodule Servy.Handler do
   def handle(request) do
     request
     |> parse
+    |> log
     |> route
     |> format_response
+  end
+
+  def log(conv) do
+    IO.inspect conv
   end
 
   def parse(request) do
     [method, path, _] = request
     |> String.split("\n")
     |> List.first
-    |> String.split(first_line, " ")
+    |> String.split(" ")
 
      %{
       method: method,
@@ -19,18 +24,17 @@ defmodule Servy.Handler do
   end
 
   def route(conv) do
-    # TODO: Create a new map that also has the response body:
-    conv = %{ method: "GET", path: "/wildthings", resp_body: "Bears, Lions, Tigers" }
+    %{ conv | resp_body: "Bears, Lions, Tigers" }
   end
 
   def format_response(conv) do
-    # TODO: Use values in the map to create an HTTP response string:
+
     """
     HTTP/1.1 200 OK
     Content-Type: text/html
-    Content-Length: 20
+    Content-Length: #{byte_size(conv.resp_body)}
 
-    Bears, Lions, Tigers
+    #{conv.resp_body}
     """
   end
 end
