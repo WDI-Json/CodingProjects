@@ -52,10 +52,10 @@ defmodule Servy.Handler do
     conv
   end
 
-  def track(%{status: 404, path: path} = conv) do
+  def track(%{status: "404", path: path} = conv) do
     IO.puts("Warning: #{path} is not recognized as a valid endpoint")
     Logger.warning(
-      "Warning: ⚠️⚠️⚠️#{path} is not recognized as a valid endpoint⚠️⚠️⚠️",
+      "Warning: ⚠️⚠️⚠️ #{path} is not recognized as a valid endpoint⚠️⚠️⚠️",
       [
         date: DateTime.utc_now(),
         request_id: to_string(:erlang.ref_to_list(:erlang.make_ref()))
@@ -71,7 +71,7 @@ defmodule Servy.Handler do
   end
 
   def route(%{ method: "GET", path: "/wildthings"} = conv) do
-    %{ conv | status: 200, resp_body: "Bears, Lions, Tigers"}
+    %{ conv | status: "200", resp_body: "Bears, Lions, Tigers"}
   end
 
   def route(%{ method: "GET", path: "/bears"} = conv) do
@@ -123,12 +123,12 @@ defmodule Servy.Handler do
 
   defp status_reason(code) do
     %{
-      200 => "OK",
-      201 => "Created",
-      401 => "Unauthorized",
-      403 => "Forbidden",
-      404 => "Not Found",
-      500 => "Internal Server Error"
+      "200" => "OK",
+      "201" => "Created",
+      "401" => "Unauthorized",
+      "403" => "Forbidden",
+      "404" => "Not Found",
+      "500" => "Internal Server Error"
     }[code]
   end
 
