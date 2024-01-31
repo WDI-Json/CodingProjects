@@ -1,13 +1,17 @@
 defmodule Servy.Handler do
+  require Logger
   def handle(request) do
     request
     |> parse
-    |> log
+    |> rewrite_path
+    |> log_start
     |> route
-    |> format_response
+    |> emojify
+    |> track
+    |> log_progress
+    |> format_response_header
+    |> format_response_body
   end
-
-  def log(conv), do: IO.inspect conv
 
   def parse(request) do
     [method, path, _] = request
@@ -19,36 +23,96 @@ defmodule Servy.Handler do
       method: method,
       path: path,
       resp_body: "",
+      resp_header: "",
       status: nil
     }
   end
 
-  def route(conv) do
-    route(conv, conv.method, conv.path)
+  def rewrite_path(%{path: "/wildlife"} = conv) do
+    %{ conv | method: "GET", path: "/wildthings"}
   end
 
-  def route(conv, "GET", "/wildthings") do
-    %{conv | status: 200, resp_body: "Bears, Lions, Tigers"}
+  def rewrite_path(%{path: path} = conv) do
+    regex = ~r{\/(?<thing>\w+)\?id=(?<id>\d+)}
+    captures = Regex.named_captures(regex, path)
+    rewrite_path_captures(conv, captures)
   end
 
-  def route(conv, "GET", "/bears") do
-    %{conv | status: 200, resp_body: "Teddy, Smokey, Paddington"}
+  def rewrite_path(conv), do: conv
+
+  def rewrite_path_captures(conv, %{"thing" => thing, "id" => id}) do
+    %{ conv| path: "/#{thing}/#{id}}" }
   end
 
-  def route(conv, "GET", "/bears/" <> id) do
-    %{conv | status: 200, resp_body: "bear #{id}"}
+  def rewrite_path_captures(conv, nil), do: conv
+
+  def log_start(conv) do
+    IO.inspect conv
+    Logger.info("#{conv.path} received. \nchecking for bad input🔍🔍🔍")
+    conv
   end
 
-  def route(conv, "DELETE", "/bears/" <> id) do
-    %{conv | status: 403, resp_body: "bear #{id} is forbidden!"}
+  def track(%{status: 404, path: path} = conv) do
+    IO.puts("Warning: #{path} is not recognized as a valid endpoint")
+    Logger.warning(
+      "Warning: ⚠️⚠️⚠️#{path} is not recognized as a valid endpoint⚠️⚠️⚠️",
+      [
+        date: DateTime.utc_now(),
+        request_id: to_string(:erlang.ref_to_list(:erlang.make_ref()))
+        ])
+    conv
   end
 
-  def route(conv, _method, path) do
-    %{conv | status: 404, resp_body: "No #{path} here!"}
-  end
-  def format_response(conv) do
+  def track(conv), do: conv
 
+  def log_progress(conv) do
+    Logger.info("Pre-checks succes✅. Formatting response")
+    conv
+  end
+
+  def route(%{ method: "GET", path: "/wildthings"} = conv) do
+    %{ conv | status: 200, resp_body: "Bears, Lions, Tigers"}
+  end
+
+  def route(%{ method: "GET", path: "/bears"} = conv) do
+    %{ conv | status: "200", resp_body: "Teddy, Smokey, Paddington"}
+  end
+
+  def route(%{ method: "GET", path: "/bears/" <> id} = conv) do
+    %{ conv | status: "200", resp_body: "bear #{id}"}
+  end
+
+  def route(%{ method: "DELETE", path: "/bears/" <> _id} = conv) do
+    %{ conv | status: "403", resp_body: "Bears must never be deleted!"}
+  end
+
+  def route(%{ path: path} = conv) do
+    %{ conv | status: "404", resp_body: "No #{path} here!"}
+  end
+
+  def emojify(%{status: "200"} = conv) do
+    emojies = String.duplicate("🚀", 5)
+    body = emojies <> "\n" <> conv.resp_body <> "\n" <> emojies
+
+    %{ conv | resp_body: body }
+  end
+
+  def emojify(conv), do: conv
+
+  def format_response_header(conv) do
+
+    header = """
+    Date: #{DateTime.utc_now()}
+    Server: Some Server
+    Access-Control-Allow-Origin: *
+    Keep-Alive: timeout=2, max=100
+    Connection: Keep-Alive
     """
+    %{ conv | resp_header: header }
+  end
+  def format_response_body(conv) do
+    """
+    #{conv.resp_header}
     HTTP/1.1 #{conv.status} #{status_reason(conv.status)}
     Content-Type: text/html
     Content-Length: #{byte_size(conv.resp_body)}
@@ -120,6 +184,18 @@ IO.puts response
 
 request = """
 GET /bigfoot HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response = Servy.Handler.handle(request)
+
+IO.puts response
+
+request = """
+GET /wildlife HTTP/1.1
 Host: example.com
 User-Agent: ExampleBrowser/1.0
 Accept: */*
