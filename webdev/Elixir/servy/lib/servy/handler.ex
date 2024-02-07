@@ -21,7 +21,6 @@ defmodule Servy.Handler do
     |> emojify
     |> track
     |> log_progress
-    |> format_response_header
     |> format_response_body
   end
 
@@ -80,20 +79,8 @@ defmodule Servy.Handler do
 
   def emojify(%Conv{} = conv), do: conv
 
-  def format_response_header(%Conv{} = conv) do
-
-    header = """
-    Date: #{DateTime.utc_now()}
-    Server: Some Server
-    Access-Control-Allow-Origin: *
-    Keep-Alive: timeout=2, max=100
-    Connection: Keep-Alive
-    """
-    %{ conv | resp_header: header }
-  end
   def format_response_body(%Conv{} = conv) do
     """
-    #{conv.resp_header}
     HTTP/1.1 #{Conv.full_status(conv)}
     Content-Type: text/html
     Content-Length: #{byte_size(conv.resp_body)}

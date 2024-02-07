@@ -3,7 +3,7 @@ defmodule Servy.Conv do
             path: "",
             params: %{},
             resp_body: "",
-            resp_header: "",
+            headers: %{},
             status: nil
 
   def full_status(conv) do
