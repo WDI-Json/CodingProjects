@@ -33,7 +33,6 @@ defmodule Servy.Plugins do
   def track(%Conv{} = conv), do: conv
 
   def log_start(%Conv{} = conv) do
-    IO.inspect conv
     Logger.info("#{conv.path} received. \nchecking for bad input🔍🔍🔍")
     conv
   end
