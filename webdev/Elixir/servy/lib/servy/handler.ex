@@ -22,6 +22,7 @@ defmodule Servy.Handler do
     |> emojify
     |> track
     |> log_progress
+    |> put_content_length
     |> format_response_body
   end
 
@@ -29,15 +30,23 @@ defmodule Servy.Handler do
     %{ conv | status: 200, resp_body: "Bears, Lions, Tigers"}
   end
 
+  def route(%Conv{ method: "GET", path: "/api/bears"} = conv) do
+    Servy.Api.BearController.index(conv)
+  end
+
   def route(%Conv{ method: "GET", path: "/bears"} = conv) do
     BearController.index(conv)
   end
 
   def route(%Conv{ method: "GET", path: "/bears/new"} = conv) do
-    Path.expand("../../pages", __DIR__)
+    @pages_path
     |> Path.join("form.html")
     |> File.read
     |> handle_file(conv)
+  end
+
+  def route(%Conv{ method: "POST", path: "/api/bears"} = conv) do
+    Servy.Api.BearController.create(conv, conv.params)
   end
 
   def route(%Conv{ method: "POST", path: "/bears"} = conv) do
@@ -81,11 +90,24 @@ defmodule Servy.Handler do
 
   def emojify(%Conv{} = conv), do: conv
 
+  def put_content_length(conv) do
+    headers = Map.put(conv.resp_headers, "Content-Length", byte_size(conv.resp_body))
+    %{conv | resp_headers: headers}
+  end
+
+  def format_response_headers(conv) do
+    for {key, value} <- conv.resp_headers do
+      "#{key}: #{value}\r"
+    end
+    |> Enum.sort
+    |> Enum.reverse
+    |> Enum.join("\n")
+  end
+
   def format_response_body(%Conv{} = conv) do
     """
     HTTP/1.1 #{Conv.full_status(conv)}\r
-    Content-Type: text/html\r
-    Content-Length: #{byte_size(conv.resp_body)}\r
+    #{format_response_headers(conv)}
 
     #{conv.resp_body}
     """

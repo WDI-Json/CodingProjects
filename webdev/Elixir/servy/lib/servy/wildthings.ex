@@ -2,18 +2,11 @@ defmodule Servy.Wildthings do
   alias Servy.Bear
 
   def list_bears do
-    [
-      %Bear{id: 1, name: "Grizzly", type: "Brown Bear", hibernating: false},
-      %Bear{id: 2, name: "Polar", type: "White Bear", hibernating: false},
-      %Bear{id: 3, name: "Kodiak", type: "Brown Bear", hibernating: true},
-      %Bear{id: 4, name: "Black", type: "Black Bear", hibernating: false},
-      %Bear{id: 5, name: "Sun", type: "Sloth Bear", hibernating: true},
-      %Bear{id: 6, name: "Gobi", type: "Grizzly Bear", hibernating: false},
-      %Bear{id: 7, name: "Teddy", type: "Toy Bear", hibernating: false},
-      %Bear{id: 8, name: "Paddington", type: "Peruvian Bear", hibernating: true},
-      %Bear{id: 9, name: "Baloo", type: "Sloth Bear", hibernating: false},
-      %Bear{id: 10, name: "Winnie", type: "American Black Bear", hibernating: true}
-    ]
+    Path.expand("../../db", __DIR__)
+    |> Path.join("bears.json")
+    |> read_json
+    |> Poison.decode!(as: %{"bears" => [%Bear{}]})
+    |> Map.get("bears")
   end
 
   def get_bear(id) when is_integer(id) do
@@ -24,6 +17,17 @@ defmodule Servy.Wildthings do
     id
     |> String.to_integer
     |> get_bear
+  end
+
+  defp read_json(source) do
+    case File.read(source) do
+      {:ok, contents} ->
+        contents
+      {:error, reason} ->
+        IO.inspect "Error reading #{source}: #{reason}"
+        "[]"
+    end
+
   end
 
 end

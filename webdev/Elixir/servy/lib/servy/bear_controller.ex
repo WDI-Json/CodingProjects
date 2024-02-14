@@ -20,7 +20,7 @@ defmodule Servy.BearController do
     # %{ conv | status: 200, resp_body: BearView.show(bear) }
   end
 
-  def create(conv, %{"type" => type, "name" => name} = _params) do
+  def create(conv, %{"type" => type, "name" => name}) do
     %{ conv | status: 201,
     resp_body: "Created a #{type} bear named #{name}!"}
   end
