@@ -70,16 +70,23 @@ defmodule Servy.Handler do
     |> handle_file(conv)
   end
 
-  def route(%Conv{ method: "GET", path: "/pages/" <> file} = conv) do
+  def route(%Conv{method: "GET", path: "/pages/" <> name} = conv) do
     @pages_path
-    |> Path.join(file <> ".html")
+    |> Path.join("#{name}.md")
     |> File.read
     |> handle_file(conv)
+    |> markdown_to_html
   end
 
   def route(%Conv{ path: path} = conv) do
     %{ conv | status: 404, resp_body: "No #{path} here!"}
   end
+
+  def markdown_to_html(%Conv{status: 200} = conv) do
+    %{ conv | resp_body: Earmark.as_html!(conv.resp_body) }
+  end
+
+  def markdown_to_html(%Conv{} = conv), do: conv
 
   def emojify(%Conv{status: 200} = conv) do
     emojies = String.duplicate("🚀", 5)
@@ -112,5 +119,4 @@ defmodule Servy.Handler do
     #{conv.resp_body}
     """
   end
-
 end
