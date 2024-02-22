@@ -19,4 +19,4 @@ defmodule Deck do
 end
 
 # IO.inspect Deck.create_deck()
-Deck.deal_cards()
+# Deck.deal_cards()

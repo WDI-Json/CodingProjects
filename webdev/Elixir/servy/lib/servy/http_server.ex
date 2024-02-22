@@ -34,8 +34,8 @@ defmodule Servy.HttpServer do
     IO.puts "⚡️  Connection accepted!\n"
 
     # Receives the request and sends a response over the client socket.
-    serve(client_socket)
-
+    pid = spawn(fn -> serve(client_socket) end)
+    :ok = :gen_tcp.controlling_process(client_socket, pid)
     # Loop back to wait and accept the next connection.
     accept_loop(listen_socket)
   end
@@ -45,6 +45,7 @@ defmodule Servy.HttpServer do
   sends a response back over the same socket.
   """
   def serve(client_socket) do
+    IO.puts "#{inspect self()}: working on it!"
     client_socket
     |> read_request
     |> Servy.Handler.handle
@@ -57,7 +58,7 @@ defmodule Servy.HttpServer do
   def read_request(client_socket) do
     {:ok, request} = :gen_tcp.recv(client_socket, 0) # all available bytes
 
-    IO.puts "➡️  Received request:\n"
+    IO.puts "➡️➡️➡️  Received request:\n"
     IO.puts request
 
     request
@@ -66,7 +67,7 @@ defmodule Servy.HttpServer do
   @doc """
   Returns a generic HTTP response.
   """
-  def generate_response(_request) do
+  def generate_response(request) do
     """
     HTTP/1.1 200 OK\r
     Content-Type: text/plain\r

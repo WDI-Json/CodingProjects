@@ -27,7 +27,5 @@ defmodule Servy.Wildthings do
         IO.inspect "Error reading #{source}: #{reason}"
         "[]"
     end
-
   end
-
 end
