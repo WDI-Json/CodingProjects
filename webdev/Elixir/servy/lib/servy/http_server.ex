@@ -59,7 +59,7 @@ defmodule Servy.HttpServer do
     {:ok, request} = :gen_tcp.recv(client_socket, 0) # all available bytes
 
     IO.puts "➡️➡️➡️  Received request:\n"
-    IO.puts request
+    # IO.puts request
 
     request
   end
