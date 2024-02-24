@@ -64,4 +64,42 @@ defmodule HttpServerTest do
       end
     end
   end
+
+  test "TASK CALLS" do
+    spawn(HttpServer, :start, [4444])
+
+    url = "http://localhost:4444/wildthings"
+
+    1..5
+    |> Enum.map(fn(_) -> Task.async(fn -> HTTPoison.get(url) end) end)
+    |> Enum.map(&Task.await/1)
+    |> Enum.map(&assert_successful_response/1)
+  end
+
+  # defp assert_successful_response({:ok, response}) do
+  #   assert response.status_code == 200
+  #   assert response.body == "Bears, Lions, Tigers"
+  # end
+
+  test "MULTI URL CHECKS" do
+    spawn(HttpServer, :start, [5555])
+
+    urls = [
+      "http://localhost:5555/wildthings",
+      "http://localhost:5555/bears",
+      "http://localhost:5555/bears/1",
+      "http://localhost:5555/wildlife",
+      "http://localhost:5555/api/bears"
+    ]
+
+
+    urls
+    |> Enum.map(&Task.async(fn -> HTTPoison.get(&1) end))
+    |> Enum.map(&Task.await/1)
+    |> Enum.map(&assert_successful_response/1)
+  end
+
+  defp assert_successful_response({:ok, response}) do
+    assert response.status_code == 200
+  end
 end
