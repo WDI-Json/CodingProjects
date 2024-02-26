@@ -67,7 +67,7 @@ defmodule Servy.HttpServer do
   @doc """
   Returns a generic HTTP response.
   """
-  def generate_response(request) do
+  def generate_response(_request) do
     """
     HTTP/1.1 200 OK\r
     Content-Type: text/plain\r

@@ -29,6 +29,18 @@ defmodule Servy.Handler do
     |> format_response_body
   end
 
+  def route(%Conv{method: "GET", path: "/pledges/new"} = conv) do
+    Servy.PledgeController.new(conv)
+  end
+
+  def route(%Conv{method: "POST", path: "/pledges"} = conv) do
+    Servy.PledgeController.create(conv, conv.params)
+  end
+
+  def route(%Conv{method: "GET", path: "/pledges"} = conv) do
+    Servy.PledgeController.index(conv)
+  end
+
   def route(%Conv{ method: "GET", path: "/sensors" } = conv) do
     task = Task.async(Servy.Tracker, :get_location, ["bigfoot"])
 
@@ -103,6 +115,14 @@ defmodule Servy.Handler do
     |> File.read
     |> handle_file(conv)
     |> markdown_to_html
+  end
+
+  def route(%Conv{method: "GET", path: "/404s"} = conv) do
+    counts = Servy.FourOhFourCounter.get_counts()
+    not_founds = Map.values(counts) |> Enum.sum()
+    conv = %{ conv | status: 200, resp_body: inspect counts }
+    render(conv, "not_founds.eex", total_errors: not_founds, counts: counts)
+
   end
 
   def route(%Conv{ path: path} = conv) do

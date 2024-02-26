@@ -25,8 +25,11 @@ defmodule Servy.Plugins do
       "Warning: ⚠️⚠️⚠️ #{path} is not recognized as a valid endpoint⚠️⚠️⚠️",
       [
         date: DateTime.utc_now(),
-        request_id: to_string(:erlang.ref_to_list(:erlang.make_ref()))
+        request_id: to_string(
+          :erlang.ref_to_list(:erlang.make_ref())
+          )
         ])
+        Servy.FourOhFourCounter.bump_count(path)
     conv
   end
 

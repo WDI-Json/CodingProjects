@@ -1,0 +1,9 @@
+<h1>404s</h1>
+
+<h2>Not found paths</h2>
+<h1>Amount of 404s <%= total_errors %> </h1>
+<ul>
+  <%= for {path, value} <- Map.to_list(counts) do %>
+    <li>Count Name: "<%= path %>" (count nr: <%= value %>)</li>
+  <% end %>
+</ul>
