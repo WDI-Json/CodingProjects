@@ -10,35 +10,20 @@ defmodule Servy.PledgeServer do
     GenericServer.start(__MODULE__, [], @process_name)
   end
 
-  def create_pledge(name, amount) do
-    GenericServer.call(@process_name, {:create_pledge, name, amount})
-  end
-
-  def recent_pledges() do
-    GenericServer.call(@process_name, :recent_pledges)
-  end
-
-  def total_pledged() do
-    GenericServer.call(@process_name, :total_pledged)
-  end
-
-  def clear() do
-    GenericServer.cast(@process_name, :clear)
-  end
+  def create_pledge(name, amount), do: GenericServer.call(@process_name, {:create_pledge, name, amount})
+  def recent_pledges, do: GenericServer.call(@process_name, :recent_pledges)
+  def total_pledged, do: GenericServer.call(@process_name, :total_pledged)
+  def clear, do: GenericServer.cast(@process_name, :clear)
 
   # Server callbacks
-
-  def handle_cast(:clear, _state) do
-    []
-  end
+  def handle_cast(:clear, _state), do: []
+  def handle_call(:recent_pledges, state), do: {state, state}
 
   def handle_call(:total_pledged, state) do
-    total = Enum.map(state, &elem(&1, 1)) |> Enum.sum()
+    total =
+      Enum.map(state, &elem(&1, 1))
+      |> Enum.sum()
     {total, state}
-  end
-
-  def handle_call(:recent_pledges, state) do
-    {state, state}
   end
 
   def handle_call({:create_pledge, name, amount}, state) do
@@ -49,7 +34,6 @@ defmodule Servy.PledgeServer do
   end
 
   defp send_pledge_to_service(_name, _amount) do
-    #code for sending to external service
     {:ok, "pledge-#{:rand.uniform(1000)}" }
   end
 end
