@@ -1,0 +1,48 @@
+{
+  "version": "2.0.0",
+  "options": {
+    "shell": {
+      "executable": "/bin/bash",
+      "args": ["-l", "-c"]
+    },
+    "cwd": "${fileWorkspaceFolder}"
+  },
+  "tasks": [
+    {
+      "label": "test all",
+      "type": "shell",
+      "command": "mix test",
+      "problemMatcher": [],
+      "group": "test",
+      "presentation": {
+        "focus": true
+      }
+    },
+    {
+      "label": "test current file",
+      "type": "shell",
+      "command": "mix test ${relativeFile}",
+      "problemMatcher": [],
+      "group": "test",
+      "presentation": {
+        "focus": true
+      }
+    },
+    {
+      "label": "test current line",
+      "type": "shell",
+      "command": "mix test ${relativeFile}:${lineNumber}",
+      "presentation": {
+        "focus": true
+      }
+    },
+    {
+      "label": "debug current line",
+      "type": "shell",
+      "command": "iex --dbg pry -S mix test --timeout 999999999 ${relativeFile}:${lineNumber}",
+      "presentation": {
+        "focus": true
+      }
+    }
+  ]
+}
