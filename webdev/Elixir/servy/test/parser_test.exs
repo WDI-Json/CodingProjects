@@ -11,6 +11,4 @@ defmodule ParserTest do
 
     assert headers == %{"A" => "1", "B" => "2"}
   end
-
-
 end

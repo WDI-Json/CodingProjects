@@ -31,7 +31,7 @@ defmodule HttpServerTest do
   test "POISON WAY || accepts a request on a socket and sends back a response" do
     spawn(HttpServer, :start, [4040])
 
-    {:ok, response} = HTTPoison.get "http://localhost:4040/wildthings"
+    {:ok, response} = HTTPoison.get("http://localhost:4040/wildthings")
 
     assert response.status_code == 200
     assert response.body == "Bears, Lions, Tigers"
@@ -48,7 +48,7 @@ defmodule HttpServerTest do
     for _ <- 1..max_concurrent_requests do
       spawn(fn ->
         # Send the request
-        {:ok, response} = HTTPoison.get "http://localhost:4000/wildthings"
+        {:ok, response} = HTTPoison.get("http://localhost:4000/wildthings")
 
         # Send the response back to the parent
         send(parent, {:ok, response})
@@ -71,7 +71,7 @@ defmodule HttpServerTest do
     url = "http://localhost:4444/wildthings"
 
     1..5
-    |> Enum.map(fn(_) -> Task.async(fn -> HTTPoison.get(url) end) end)
+    |> Enum.map(fn _ -> Task.async(fn -> HTTPoison.get(url) end) end)
     |> Enum.map(&Task.await/1)
     |> Enum.map(&assert_successful_response/1)
   end
@@ -91,7 +91,6 @@ defmodule HttpServerTest do
       "http://localhost:5555/wildlife",
       "http://localhost:5555/api/bears"
     ]
-
 
     urls
     |> Enum.map(&Task.async(fn -> HTTPoison.get(&1) end))

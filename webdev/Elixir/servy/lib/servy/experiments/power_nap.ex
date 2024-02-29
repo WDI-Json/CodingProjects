@@ -1,5 +1,4 @@
 defmodule Servy.Experiments.PowerNap do
-
   parent = self()
 
   power_nap = fn ->
@@ -11,8 +10,6 @@ defmodule Servy.Experiments.PowerNap do
   spawn(fn -> send(parent, {:slept, power_nap.()}) end)
 
   receive do
-    {:slept, time} -> IO.puts "Slept #{time} ms"
+    {:slept, time} -> IO.puts("Slept #{time} ms")
   end
-
-
 end

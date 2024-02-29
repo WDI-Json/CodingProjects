@@ -1,9 +1,7 @@
 defmodule Servy.Handler do
-
-  alias Servy.VideoCam
   alias Servy.Conv
   alias Servy.BearController
-  alias Servy.VideoCam
+
   @moduledoc """
   Handles HTTP requests.
   """
@@ -12,7 +10,7 @@ defmodule Servy.Handler do
   import Servy.FileHandler, only: [handle_file: 2]
   import Servy.View, only: [render: 3]
 
-  @pages_path Path.expand("pages", File.cwd!)
+  @pages_path Path.expand("pages", File.cwd!())
   @doc """
   Transforms the request into a response.
   """
@@ -41,7 +39,7 @@ defmodule Servy.Handler do
     Servy.PledgeController.index(conv)
   end
 
-  def route(%Conv{ method: "GET", path: "/sensors" } = conv) do
+  def route(%Conv{method: "GET", path: "/sensors"} = conv) do
     task = Task.async(Servy.Tracker, :get_location, ["bigfoot"])
     where_is_bigfoot = Task.await(task)
 
@@ -50,66 +48,66 @@ defmodule Servy.Handler do
     # %{ conv | status: 200, resp_body: inspect {snapshots, where_is_bigfoot }}
   end
 
-  def route(%Conv{ method: "GET", path: "/kaboom" } ) do
+  def route(%Conv{method: "GET", path: "/kaboom"}) do
     raise "Kaboom!"
   end
 
-  def route(%Conv{ method: "GET", path: "/hibernate/" <> time } = conv) do
+  def route(%Conv{method: "GET", path: "/hibernate/" <> time} = conv) do
     time
-    |> String.to_integer
-    |> :timer.sleep
+    |> String.to_integer()
+    |> :timer.sleep()
 
-    %{ conv | status: 200, resp_body: "Awake!"}
+    %{conv | status: 200, resp_body: "Awake!"}
   end
 
-  def route(%Conv{ method: "GET", path: "/wildthings"} = conv) do
-    %{ conv | status: 200, resp_body: "Bears, Lions, Tigers"}
+  def route(%Conv{method: "GET", path: "/wildthings"} = conv) do
+    %{conv | status: 200, resp_body: "Bears, Lions, Tigers"}
   end
 
-  def route(%Conv{ method: "GET", path: "/api/bears"} = conv) do
+  def route(%Conv{method: "GET", path: "/api/bears"} = conv) do
     Servy.Api.BearController.index(conv)
   end
 
-  def route(%Conv{ method: "GET", path: "/bears"} = conv) do
+  def route(%Conv{method: "GET", path: "/bears"} = conv) do
     BearController.index(conv)
   end
 
-  def route(%Conv{ method: "GET", path: "/bears/new"} = conv) do
+  def route(%Conv{method: "GET", path: "/bears/new"} = conv) do
     @pages_path
     |> Path.join("form.html")
-    |> File.read
+    |> File.read()
     |> handle_file(conv)
   end
 
-  def route(%Conv{ method: "POST", path: "/api/bears"} = conv) do
+  def route(%Conv{method: "POST", path: "/api/bears"} = conv) do
     Servy.Api.BearController.create(conv, conv.params)
   end
 
-  def route(%Conv{ method: "POST", path: "/bears"} = conv) do
+  def route(%Conv{method: "POST", path: "/bears"} = conv) do
     BearController.create(conv, conv.params)
   end
 
-  def route(%Conv{ method: "GET", path: "/bears/" <> id} = conv) do
+  def route(%Conv{method: "GET", path: "/bears/" <> id} = conv) do
     params = Map.put(conv.params, "id", id)
     BearController.show(conv, params)
   end
 
-  def route(%Conv{ method: "DELETE", path: "/bears/" <> id} = conv) do
+  def route(%Conv{method: "DELETE", path: "/bears/" <> id} = conv) do
     params = Map.put(conv.params, "id", id)
     BearController.delete(conv, params)
   end
 
-  def route(%Conv{ method: "GET", path: "/about"} = conv) do
+  def route(%Conv{method: "GET", path: "/about"} = conv) do
     @pages_path
     |> Path.join("about.html")
-    |> File.read
+    |> File.read()
     |> handle_file(conv)
   end
 
   def route(%Conv{method: "GET", path: "/pages/" <> name} = conv) do
     @pages_path
     |> Path.join("#{name}.md")
-    |> File.read
+    |> File.read()
     |> handle_file(conv)
     |> markdown_to_html
   end
@@ -117,17 +115,16 @@ defmodule Servy.Handler do
   def route(%Conv{method: "GET", path: "/404s"} = conv) do
     counts = Servy.FourOhFourCounter.get_counts()
     not_founds = Map.values(counts) |> Enum.sum()
-    conv = %{ conv | status: 200, resp_body: inspect counts }
+    conv = %{conv | status: 200, resp_body: inspect(counts)}
     render(conv, "not_founds.eex", total_errors: not_founds, counts: counts)
-
   end
 
-  def route(%Conv{ path: path} = conv) do
-    %{ conv | status: 404, resp_body: "No #{path} here!"}
+  def route(%Conv{path: path} = conv) do
+    %{conv | status: 404, resp_body: "No #{path} here!"}
   end
 
   def markdown_to_html(%Conv{status: 200} = conv) do
-    %{ conv | resp_body: Earmark.as_html!(conv.resp_body) }
+    %{conv | resp_body: Earmark.as_html!(conv.resp_body)}
   end
 
   def markdown_to_html(%Conv{} = conv), do: conv
@@ -136,7 +133,7 @@ defmodule Servy.Handler do
     emojies = String.duplicate("🚀", 5)
     body = emojies <> "\r\n" <> conv.resp_body <> "\r\n" <> emojies <> "\r"
 
-    %{ conv | resp_body: body }
+    %{conv | resp_body: body}
   end
 
   def emojify(%Conv{} = conv), do: conv
@@ -150,8 +147,8 @@ defmodule Servy.Handler do
     for {key, value} <- conv.resp_headers do
       "#{key}: #{value}\r"
     end
-    |> Enum.sort
-    |> Enum.reverse
+    |> Enum.sort()
+    |> Enum.reverse()
     |> Enum.join("\n")
   end
 

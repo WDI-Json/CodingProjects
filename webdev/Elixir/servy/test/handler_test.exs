@@ -14,14 +14,14 @@ defmodule HandlerTest do
     response = handle(request)
 
     assert response == """
-    HTTP/1.1 200 OK\r
-    Content-Type: text/html\r
-    Content-Length: 65\r
+           HTTP/1.1 200 OK\r
+           Content-Type: text/html\r
+           Content-Length: 65\r
 
-    🚀🚀🚀🚀🚀\r
-    Bears, Lions, Tigers\r
-    🚀🚀🚀🚀🚀\r
-    """
+           🚀🚀🚀🚀🚀\r
+           Bears, Lions, Tigers\r
+           🚀🚀🚀🚀🚀\r
+           """
   end
 
   test "DELETE /wildthings" do
@@ -36,12 +36,12 @@ defmodule HandlerTest do
     response = handle(request)
 
     assert response == """
-    HTTP/1.1 403 Forbidden\r
-    Content-Type: text/html\r
-    Content-Length: 34\r
+           HTTP/1.1 403 Forbidden\r
+           Content-Type: text/html\r
+           Content-Length: 34\r
 
-    Bear with 1 must never be deleted!
-    """
+           Bear with 1 must never be deleted!
+           """
   end
 
   test "GET /bigfoot" do
@@ -56,12 +56,12 @@ defmodule HandlerTest do
     response = handle(request)
 
     assert response == """
-    HTTP/1.1 404 Not Found\r
-    Content-Type: text/html\r
-    Content-Length: 17\r
+           HTTP/1.1 404 Not Found\r
+           Content-Type: text/html\r
+           Content-Length: 17\r
 
-    No /bigfoot here!
-    """
+           No /bigfoot here!
+           """
   end
 
   test "GET /api/bears" do
@@ -102,12 +102,12 @@ defmodule HandlerTest do
     response = handle(request)
 
     assert response == """
-    HTTP/1.1 201 Created\r
-    Content-Type: text/html\r
-    Content-Length: 35\r
+           HTTP/1.1 201 Created\r
+           Content-Type: text/html\r
+           Content-Length: 35\r
 
-    Created a Polar bear named Breezly!
-    """
+           Created a Polar bear named Breezly!
+           """
   end
 
   test "GET /pages/faq" do

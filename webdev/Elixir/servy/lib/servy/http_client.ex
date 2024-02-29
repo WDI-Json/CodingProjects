@@ -1,7 +1,6 @@
 defmodule Servy.HttpClient do
-
   def send_request(request) do
-    host = 'localhost'
+    host = ~c"localhost"
 
     {:ok, socket} = :gen_tcp.connect(host, 4000, [:binary, packet: :raw, active: false])
 

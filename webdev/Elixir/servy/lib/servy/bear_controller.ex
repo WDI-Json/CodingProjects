@@ -9,7 +9,7 @@ defmodule Servy.BearController do
       Wildthings.list_bears()
       |> Enum.sort(&Bear.order_asc_by_name/2)
 
-      render(conv, "index.eex", bears: bears)
+    render(conv, "index.eex", bears: bears)
     # %{ conv | status: 200, resp_body: BearView.index(bears) }
   end
 
@@ -17,16 +17,14 @@ defmodule Servy.BearController do
     bear = Wildthings.get_bear(id)
 
     render(conv, "show.eex", bear: bear)
-    %{ conv | status: 200, resp_body: BearView.show(bear) }
+    %{conv | status: 200, resp_body: BearView.show(bear)}
   end
 
   def create(conv, %{"type" => type, "name" => name}) do
-    %{ conv | status: 201,
-    resp_body: "Created a #{type} bear named #{name}!"}
+    %{conv | status: 201, resp_body: "Created a #{type} bear named #{name}!"}
   end
 
   def delete(conv, %{"id" => id}) do
-    %{ conv | status: 403, resp_body: "Bear with #{id} must never be deleted!"}
+    %{conv | status: 403, resp_body: "Bear with #{id} must never be deleted!"}
   end
-
 end
