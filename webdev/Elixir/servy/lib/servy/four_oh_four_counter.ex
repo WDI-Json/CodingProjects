@@ -7,9 +7,9 @@ defmodule Servy.FourOhFourCounter do
     defstruct urls: %{}
   end
 
-  def start() do
+  def start_link(_arg) do
     IO.puts("Starting the 404 counter...")
-    GenServer.start(__MODULE__, %State{}, name: @process_name)
+    GenServer.start_link(__MODULE__, %State{}, name: @process_name)
   end
 
   def clear, do: GenServer.cast(@process_name, :clear)
