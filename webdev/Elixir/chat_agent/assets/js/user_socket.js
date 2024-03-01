@@ -2,11 +2,11 @@
 // you uncomment its entry in "assets/js/app.js".
 
 // Bring in Phoenix channels client library:
-import {Socket} from "phoenix"
+import { Socket } from "phoenix"
 
 // And connect to the path in "lib/chat_agent_web/endpoint.ex". We pass the
 // token for authentication. Read below how it should be used.
-let socket = new Socket("/socket", {params: {token: window.userToken}})
+let socket = new Socket("/socket", { params: { token: window.userToken } })
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
@@ -56,9 +56,64 @@ socket.connect()
 // Now that you are connected, you can join channels with a topic.
 // Let's assume you have a channel with a topic named `room` and the
 // subtopic is its id - in this case 42:
-let channel = socket.channel("room:42", {})
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+var channel = socket.channel("room:lobby", {})
+var chatInput = document.querySelector("#chat-input")
+var messagesContainer = document.querySelector("#messages")
+var username = document.querySelector("#username")
+
+socket.onOpen((ev) => console.log("OPEN", ev))
+socket.onError((ev) => console.log("ERROR", ev))
+socket.onClose((e) => console.log("CLOSE", e))
+
+chatInput.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    channel.push("new_msg", { user: username.value, body: chatInput.value })
+    chatInput.value = ""
+  }
+})
+
+// channel.on("new_msg", (payload) => {
+//   let messageItem = document.createElement("p")
+//   messageItem.innerText = `[${Date()} ${payload.user}]: ${payload.body}`
+//   messagesContainer.appendChild(messageItem)
+// })
+
+channel.on("new_msg", (msg) => {
+  let messageItem = document.createElement("p")
+  messageItem.innerText = Chat.messageTemplate(msg)
+  messagesContainer.appendChild(messageItem)
+  scrollTo(0, document.body.scrollHeight)
+})
+
+channel.on("user_entered", (msg) => {
+  var username = Chat.sanitize(msg.user || "anonymous")
+  messagesContainer.append(`[${username} entered] the chat`)
+})
+
+channel
+  .join()
+  .receive("ok", (resp) => {
+    console.log("Joined successfully", resp)
+  })
+  .receive("error", (resp) => {
+    console.log("Unable to join", resp)
+  })
+
+const Chat = {
+  sanitize: (html) =>
+    document.createElement("div").appendChild(document.createTextNode(html))
+      .parentNode.innerHTML,
+
+  messageTemplate: (msg) => {
+    const username = Chat.sanitize(msg.user || "anonymous")
+    const body = Chat.sanitize(msg.body)
+    const currentDate = new Date()
+
+    // Format the date to short date format
+    const shortDate = currentDate.toLocaleDateString()
+
+    return `${shortDate} [${username}]: ${body} `
+  },
+}
 
 export default socket

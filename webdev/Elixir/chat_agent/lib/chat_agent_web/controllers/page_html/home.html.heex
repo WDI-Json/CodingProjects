@@ -1,4 +1,23 @@
-<.flash_group flash={@flash} />
+<div id="messages" class="container" role="log" aria-live="polite">
+</div>
+<div id="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2">
+        <div class="input-group">
+          <span class="input-group-addon">Current Username</span>
+          <input id="username" type="text" class="form-control" placeholder="username">
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+      <div class="col-sm-10">
+        <input id="chat-input" placeholder="Enter your message here!" class="form-control"/>
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+  </div>
+</div>
+
+
+<%!-- <.flash_group flash={@flash} />
 <div class="left-[40rem] fixed inset-y-0 right-0 z-0 hidden lg:block xl:left-[50rem]">
   <svg
     viewBox="0 0 1480 957"
@@ -219,4 +238,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> --%>
