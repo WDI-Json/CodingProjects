@@ -13,7 +13,6 @@ defmodule ChatAgentWeb.RoomChannel do
   end
 
   def handle_info({:after_join, msg}, socket) do
-    Logger.debug "#{inspect msg}"
     broadcast! socket, "user_entered", %{user: msg["user"]}
     push socket, "join", %{status: "connected"}
     {:noreply, socket}

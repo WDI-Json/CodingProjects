@@ -58,6 +58,7 @@ socket.connect()
 // subtopic is its id - in this case 42:
 var channel = socket.channel("room:lobby", {})
 var chatInput = document.querySelector("#chat-input")
+var sendButton = document.querySelector("#send-button")
 var messagesContainer = document.querySelector("#messages")
 var username = document.querySelector("#username")
 
@@ -66,10 +67,11 @@ socket.onError((ev) => console.log("ERROR", ev))
 socket.onClose((e) => console.log("CLOSE", e))
 
 chatInput.addEventListener("keypress", (event) => {
-  if (event.key === "Enter") {
-    channel.push("new_msg", { user: username.value, body: chatInput.value })
-    chatInput.value = ""
-  }
+  sendMessage(event)
+})
+
+sendButton.addEventListener("click", (event) => {
+  sendMessage(event)
 })
 
 // channel.on("new_msg", (payload) => {
@@ -87,7 +89,9 @@ channel.on("new_msg", (msg) => {
 
 channel.on("user_entered", (msg) => {
   var username = Chat.sanitize(msg.user || "anonymous")
-  messagesContainer.append(`[${username} entered] the chat`)
+  if (username == "anonymous") {
+    messagesContainer.append(`Agent Connected.`)
+  }
 })
 
 channel
@@ -114,6 +118,14 @@ const Chat = {
 
     return `${shortDate} [${username}]: ${body} `
   },
+}
+
+function sendMessage(event) {
+  if (event.key === "Enter") {
+    channel.push("new_msg", { user: username.value, body: chatInput.value })
+
+    chatInput.value = ""
+  }
 }
 
 export default socket
