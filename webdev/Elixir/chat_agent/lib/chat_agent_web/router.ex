@@ -17,6 +17,8 @@ defmodule ChatAgentWeb.Router do
   scope "/", ChatAgentWeb do
     pipe_through :browser
 
+    live "/online/:name", OnlineLive, :index
+
     get "/", PageController, :home
   end
 

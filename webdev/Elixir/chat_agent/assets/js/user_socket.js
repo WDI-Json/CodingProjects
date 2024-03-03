@@ -2,11 +2,26 @@
 // you uncomment its entry in "assets/js/app.js".
 
 // Bring in Phoenix channels client library:
-import { Socket } from "phoenix"
+import { Socket, Presence } from "phoenix"
 
 // And connect to the path in "lib/chat_agent_web/endpoint.ex". We pass the
 // token for authentication. Read below how it should be used.
 let socket = new Socket("/socket", { params: { token: window.userToken } })
+let channel = socket.channel("room:lobby", {
+  name: window.location.search.split("=")[1],
+})
+let presence = new Presence(channel)
+
+function renderOnlineUsers(presence) {
+  let response = ""
+
+  presence.list((id, { metas: [first, ...rest] }) => {
+    let count = rest.length + 1
+    response += `<li>${id} (count: ${count})</li>`
+  })
+
+  document.querySelector("#logged-users").innerHTML = response
+}
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
@@ -52,15 +67,13 @@ let socket = new Socket("/socket", { params: { token: window.userToken } })
 //
 // Finally, connect to the socket:
 socket.connect()
-
+presence.onSync(() => renderOnlineUsers(presence))
 // Now that you are connected, you can join channels with a topic.
 // Let's assume you have a channel with a topic named `room` and the
 // subtopic is its id - in this case 42:
-var channel = socket.channel("room:lobby", {})
 var chatInput = document.querySelector("#chat-input")
 var sendButton = document.querySelector("#send-button")
 var messagesContainer = document.querySelector("#messages")
-var username = document.querySelector("#username")
 
 socket.onOpen((ev) => console.log("OPEN", ev))
 socket.onError((ev) => console.log("ERROR", ev))
